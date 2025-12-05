@@ -11,7 +11,6 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import { Text } from 'react-native/types_generated/index';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -29,11 +28,10 @@ function AppContent() {
 
   return (
     <View style={styles.container}>
-      {/* <NewAppScreen
+      <NewAppScreen
         templateFileName="App.tsx"
         safeAreaInsets={safeAreaInsets}
-      /> */}
-      <Text>Remzik Era</Text>
+      />
     </View>
   );
 }
@@ -41,6 +39,7 @@ function AppContent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:'#000000'
   },
 });
 
