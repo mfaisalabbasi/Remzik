@@ -1,7 +1,7 @@
 // src/navigation/StackNavigator.js
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import OnboardingScreen from '../screens/OnBoarding';
 import TabNavigator from './TabNavigator';
 
 // import screens
@@ -16,8 +16,9 @@ const Stack = createNativeStackNavigator();
 export default function StackNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+       <Stack.Screen name="Onboarding" component={OnboardingScreen} />
 
-      <Stack.Screen name="MainTabs" component={TabNavigator} />
+      {/* <Stack.Screen name="MainTabs" component={TabNavigator} /> */}
       
       {/* Bottom tabs */}
       {/* <Stack.Screen name="MainTabs" component={TabNavigator} /> */}
