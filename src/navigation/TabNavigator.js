@@ -9,6 +9,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import colors from '../theme/colors';
+import PortfolioOverviewScreen from '../screens/Portfolio/Portfolio';
+import MarketListScreen from '../screens/Markets/Markets';
+import WalletOverviewScreen from '../screens/Wallet/Wallet';
+import MoreScreen from '../screens/MoreScreens/More';
 
 const Tab = createBottomTabNavigator();
 
@@ -38,7 +42,7 @@ export default function TabNavigator() {
 
       <Tab.Screen
         name="Portfolio"
-        component={HomeScreen}
+        component={PortfolioOverviewScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="pie-chart-outline" color={color} size={22} />
@@ -48,7 +52,7 @@ export default function TabNavigator() {
 
       <Tab.Screen
         name="Market"
-        component={HomeScreen}
+        component={MarketListScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="search-outline" color={color} size={22} />
@@ -58,7 +62,7 @@ export default function TabNavigator() {
 
       <Tab.Screen
         name="Wallet"
-        component={HomeScreen}
+        component={WalletOverviewScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="wallet-outline" color={color} size={22} />
@@ -68,7 +72,7 @@ export default function TabNavigator() {
 
       <Tab.Screen
         name="More"
-        component={HomeScreen}
+        component={MoreScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="menu-outline" color={color} size={22} />

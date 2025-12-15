@@ -1,252 +1,283 @@
-// src/screens/Home/HomeScreen.js
-
-import React, { useEffect, useState, useCallback } from 'react';
+// import React from 'react';
 import {
-  View, Text, SafeAreaView, StyleSheet, ScrollView,
-  RefreshControl, TouchableOpacity, StatusBar,
-  Platform
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+  StatusBar
 } from 'react-native';
 import colors from '../../theme/colors';
-import Header from  '../../components/Header';
-import PropertyCard from  '../../components/PropertCard';
-import { getFeaturedProperties, getMarketProperties } from '../../services/propertyService';
+import Header from '../../components/Header';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default function HomeScreen({ navigation }) {
-  const [featured, setFeatured] = useState([]);
-  const [market, setMarket] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
 
-  const load = useCallback(async () => {
-    try {
-      setLoading(true);
-      const [feat, mkt] = await Promise.all([getFeaturedProperties(), getMarketProperties()]);
-      setFeatured(feat);
-      setMarket(mkt);
-    } catch (err) {
-      console.warn('Failed to load properties', err);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => { load(); }, [load]);
-
-  const onRefresh = useCallback(async () => {
-    setRefreshing(true);
-    await load();
-    setRefreshing(false);
-  }, [load]);
-
-  const onPressProperty = (item) => {
-    // navigate to Property detail; ensure route is registeredcl
-    navigation.navigate('PropertyDetail', { propertyId: item.id });
-  };
-
+const HomeScreen = () => {
   return (
-    
-    <View style={{flex:1}}> 
-    <SafeAreaView
-        edges={['top']}
-        style={{ backgroundColor: colors.primary , paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight:0}}
-      >
-        <StatusBar
-          barStyle="light-content"
-          translucent={false}
-          backgroundColor="#0F5F3A"
-        />
-      </SafeAreaView>
+    <View style={{flex:1}}>
+       <SafeAreaView
+              edges={['top']}
+              style={{ backgroundColor: colors.primary , paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight:0}}
+            >
+              <StatusBar
+                barStyle="light-content"
+                translucent={false}
+                backgroundColor="#0F5F3A"
+              />
+            </SafeAreaView>
+             <Header
+                    title="Remzik"
+                    onProfilePress={() => navigation.navigate('Profile')}
+                    onNotifPress={() => navigation.navigate('Notifications')}
+                    left={
+                      <TouchableOpacity onPress={() => navigation.toggleDrawer?.()}>
+                        <Ionicons name="menu-outline" size={26} color={colors.card} />
+                      </TouchableOpacity>
+                    }
+                  />
+    <SafeAreaView style={styles.container}>
+     
+      <ScrollView showsVerticalScrollIndicator={false}>
 
-    <SafeAreaView style={styles.safe}>
-      <Header
-        title="Remzik"
-        onProfilePress={() => navigation.navigate('Profile')}
-        onNotifPress={() => navigation.navigate('Notifications')}
-        left={
-          <TouchableOpacity onPress={() => navigation.toggleDrawer?.()}>
-            <Ionicons name="menu-outline" size={26} color={colors.card} />
-          </TouchableOpacity>
-        }
-      />
-
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={{ paddingBottom: 120 }}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-      >
-        {/* HERO CARD */}
-        <View style={styles.heroWrap}>
-          <View style={styles.heroImagePlaceholder} />
-          <View style={styles.heroCard}>
-            <Text style={styles.heroTitle}>Emerald Gardens Villa, Dubai</Text>
-
-            <View style={styles.badges}>
-              <View style={styles.badge}><Ionicons name="checkmark-circle" size={12} color="#ffffff" /><Text style={styles.badgeText}> Valuation</Text></View>
-              <View style={[styles.badge, { marginLeft: 8, backgroundColor: colors.primary }]}><Ionicons name="shield-checkmark" size={12} color="#fff" /><Text style={styles.badgeText}> Shariah Certified</Text></View>
-            </View>
-
-            <View style={styles.tokenBox}>
-              <View style={styles.tokenRow}>
-                <View>
-                  <Text style={styles.small}>Price / token</Text>
-                  <Text style={styles.tokenValue}>$56.00</Text>
-                </View>
-                <View style={{ alignItems: 'flex-end' }}>
-                  <Text style={styles.small}>Min. purchase</Text>
-                  <Text style={styles.tokenValue}>150 tokens</Text>
-                </View>
-              </View>
-
-              <TouchableOpacity style={styles.investBtn} onPress={() => navigation.navigate('Invest')}>
-                <Text style={styles.investBtnText}>Invest Now</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
-        {/* Quick nav / cards */}
-        <View style={styles.quickRow}>
-          <TouchableOpacity style={styles.quickCard} onPress={() => navigation.navigate('Portfolio')}>
-            <Ionicons name="pie-chart" size={20} color={colors.primary} />
-            <Text style={styles.quickTitle}>Portfolio</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.quickCard} onPress={() => navigation.navigate('Market')}>
-            <Ionicons name="search" size={20} color={colors.primary} />
-            <Text style={styles.quickTitle}>Market</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.quickCard} onPress={() => navigation.navigate('Wallet')}>
-            <Ionicons name="wallet" size={20} color={colors.primary} />
-            <Text style={styles.quickTitle}>Wallet</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Featured properties */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Featured</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Market')}>
-              <Text style={styles.seeAll}>See all</Text>
-            </TouchableOpacity>
+        {/* Header */}
+        <View style={styles.header}>
+          <View>
+            <Text style={styles.greeting}>Assalamu Alaikum</Text>
+            <Text style={styles.username}>Faisal</Text>
           </View>
 
-          {featured.map(item => (
-            <PropertyCard key={item.id} item={item} onPress={onPressProperty} />
-          ))}
         </View>
 
-        {/* Market list / recent */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Market</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Market')}>
-              <Text style={styles.seeAll}>Explore</Text>
-            </TouchableOpacity>
+        {/* Portfolio Summary */}
+        <View style={styles.portfolioCard}>
+          <Text style={styles.sectionLabel}>Total Portfolio Value</Text>
+          <Text style={styles.portfolioValue}>$12,450.00</Text>
+
+          <View style={styles.divider} />
+
+          <Text style={styles.sectionLabel}>Expected Monthly Income</Text>
+          <Text style={styles.monthlyIncome}>$320.00</Text>
+        </View>
+
+        {/* Quick Actions */}
+        <View style={styles.quickActions}>
+          <TouchableOpacity style={styles.primaryButton}>
+            <Text style={styles.primaryButtonText}>Invest Now</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.secondaryButton}>
+            <Text style={styles.secondaryButtonText}>Go to Wallet</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Featured Properties */}
+        <Text style={styles.sectionTitle}>Featured Properties</Text>
+
+        <View style={styles.propertyCard}>
+          <Text style={styles.propertyTitle}>Emerald Gardens Villa</Text>
+          <Text style={styles.propertyMeta}>KSA • Real Estate</Text>
+
+          <View style={styles.propertyRow}>
+            <Text style={styles.propertyLabel}>Token Price</Text>
+            <Text style={styles.propertyValue}>$56</Text>
           </View>
 
-          {market.map(item => (
-            <PropertyCard key={item.id} item={item} onPress={onPressProperty} />
-          ))}
+          <View style={styles.propertyRow}>
+            <Text style={styles.propertyLabel}>Expected Yield</Text>
+            <Text style={styles.propertyValue}>8.4% p.a</Text>
+          </View>
+
+          <TouchableOpacity style={styles.cardButton}>
+            <Text style={styles.cardButtonText}>View Details</Text>
+          </TouchableOpacity>
         </View>
+
+        {/* Shariah Badge */}
+        <View style={styles.shariahBadge}>
+          <Text style={styles.shariahText}>✔ Shariah Certified</Text>
+        </View>
+
       </ScrollView>
-
-      {/* Bottom floating T&C row */}
-      <View style={styles.footer}>
-        <TouchableOpacity onPress={() => navigation.navigate('Terms')} style={styles.terms}>
-          <Text style={styles.termsText}>Terms & Conditions</Text>
-          <Ionicons name="chevron-forward" size={16} color={colors.muted} />
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
     </View>
-  
   );
-}
+};
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: colors.background },
-  container: { paddingHorizontal: 16 },
-  heroWrap: { marginTop: 8, alignItems: 'center' },
-  heroImagePlaceholder: {
-    width: '100%',
-    height: 160,
-    backgroundColor: colors.lightGray,
-    borderTopLeftRadius: 18,
-    borderTopRightRadius: 18,
-  },
-  heroCard: {
-    width: '94%',
-    backgroundColor: colors.card,
-    borderRadius: 12,
-    padding: 12,
-    marginTop: -30,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOpacity: 0.03,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
-  },
-  heroTitle: { fontSize: 18, fontWeight: '700', color: colors.text },
-  badges: { flexDirection: 'row', marginTop: 8 },
-  badge: {
-    backgroundColor: colors.accent,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  badgeText: { color: '#fff', fontSize: 12, marginLeft: 6 },
-  tokenBox: { marginTop: 12 },
-  tokenRow: { flexDirection: 'row', justifyContent: 'space-between' },
-  small: { color: colors.muted, fontSize: 12 },
-  tokenValue: { fontSize: 15, fontWeight: '700', color: colors.text, marginTop: 4 },
-  investBtn: {
-    marginTop: 12,
-    backgroundColor: colors.accent,
-    borderRadius: 10,
-    paddingVertical: 10,
-    alignItems: 'center',
-  },
-  investBtnText: { color: '#fff', fontWeight: '700' },
-
-  quickRow: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 16 },
-  quickCard: {
+  container: {
     flex: 1,
-    backgroundColor: colors.card,
-    marginHorizontal: 4,
-    padding: 14,
+    backgroundColor: '#FFFFFF',
+  },
+
+  header: {
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  greeting: {
+    fontSize: 14,
+    color: '#6B7280',
+  },
+
+  username: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#0B3D2E',
+  },
+
+  notificationBtn: {
+    backgroundColor: '#E6F2EE',
+    padding: 10,
+    borderRadius: 12,
+  },
+
+  notificationText: {
+    fontSize: 18,
+  },
+
+  portfolioCard: {
+    marginHorizontal: 20,
+    backgroundColor:colors.primary,
+    borderRadius: 20,
+    padding: 20,
+    marginBottom: 20,
+  },
+
+  sectionLabel: {
+    color: '#D1FAE5',
+    fontSize: 13,
+  },
+
+  portfolioValue: {
+    color: '#FFFFFF',
+    fontSize: 28,
+    fontWeight: '700',
+    marginVertical: 6,
+  },
+
+  divider: {
+    height: 1,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    marginVertical: 12,
+  },
+
+  monthlyIncome: {
+    color: '#FDE68A',
+    fontSize: 22,
+    fontWeight: '600',
+    padding:2
+  },
+
+  quickActions: {
+    marginHorizontal: 20,
+    marginBottom: 24,
+  },
+
+  primaryButton: {
+    backgroundColor: colors.accent,
+    paddingVertical: 14,
+    borderRadius: 16,
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+
+  primaryButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+
+  secondaryButton: {
+    borderWidth: 1,
+    borderColor: '#0B3D2E',
+    paddingVertical: 14,
+    borderRadius: 16,
+    alignItems: 'center',
+  },
+
+  secondaryButtonText: {
+    color: '#0B3D2E',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+
+  sectionTitle: {
+    marginHorizontal: 20,
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#0B3D2E',
+    marginBottom: 12,
+  },
+
+  propertyCard: {
+    marginHorizontal: 20,
+    backgroundColor: '#F9FAFB',
+    borderRadius: 18,
+    padding: 16,
+    marginBottom: 20,
+  },
+
+  propertyTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#0B3D2E',
+  },
+
+  propertyMeta: {
+    fontSize: 12,
+    color: '#6B7280',
+    marginBottom: 10,
+  },
+
+  propertyRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 4,
+  },
+
+  propertyLabel: {
+    fontSize: 13,
+    color: '#6B7280',
+  },
+
+  propertyValue: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#0B3D2E',
+  },
+
+  cardButton: {
+    marginTop: 14,
+    backgroundColor: '#0B3D2E',
+    paddingVertical: 10,
     borderRadius: 12,
     alignItems: 'center',
   },
-  quickTitle: { marginTop: 8, color: colors.text, fontWeight: '600' },
 
-  section: { marginTop: 18 },
-  sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 },
-  sectionTitle: { fontSize: 16, fontWeight: '700', color: colors.text },
-  seeAll: { color: colors.muted },
+  cardButtonText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '600',
+  },
 
-  footer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 60, // above tab bar
-    alignItems: 'center',
+  shariahBadge: {
+    alignSelf: 'center',
+    backgroundColor: '#E6F2EE',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    marginBottom: 30,
   },
-  terms: {
-    backgroundColor: colors.card,
-    paddingHorizontal: 24,
-    paddingVertical: 10,
-    borderRadius: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    elevation: 1,
+
+  shariahText: {
+    color: '#0B3D2E',
+    fontSize: 12,
+    fontWeight: '600',
   },
-  termsText: { color: colors.muted, marginRight: 8 },
 });
 
-
-
-
+export default HomeScreen;

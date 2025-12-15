@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image , TouchableOpacity} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import colors from '../theme/colors';
-
 const Header = () => {
   return (
     <View style={styles.container}>
@@ -9,7 +9,7 @@ const Header = () => {
         {/* Logo */}
         <Image
           source={require('../assets/remzik.png')}
-          style={{ width: 40, height: 40, resizeMode: 'contain' }}
+          style={{ width: 50, height: 50, resizeMode: 'contain' }}
         />
         <View>
           <Text style={styles.appName}>Remzik</Text>
@@ -17,7 +17,9 @@ const Header = () => {
         </View>
       </View>
 
-      <Text style={styles.region}>🇸🇦 KSA/UAE</Text>
+     <TouchableOpacity>
+                 <Ionicons name="notifications-outline" color={colors.background} size={25} />
+               </TouchableOpacity>
     </View>
   );
 };
@@ -52,6 +54,15 @@ const styles = StyleSheet.create({
   region: {
     color: 'white',
     fontSize: 13,
+  },
+  notificationBtn: {
+    backgroundColor: '#E6F2EE',
+    padding: 5,
+    borderRadius: 50,
+  },
+
+  notificationText: {
+    fontSize: 18,
   },
 });
 
