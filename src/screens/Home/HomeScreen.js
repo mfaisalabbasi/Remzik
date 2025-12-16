@@ -11,9 +11,10 @@ import {
 import colors from '../../theme/colors';
 import Header from '../../components/Header';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Screen } from 'react-native-screens';
 
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   return (
     <View style={{flex:1}}>
        <SafeAreaView
@@ -66,7 +67,7 @@ const HomeScreen = () => {
             <Text style={styles.primaryButtonText}>Invest Now</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.secondaryButton}>
+          <TouchableOpacity style={styles.secondaryButton} onPress={()=>navigation.navigate('Market',{screen:'MarketDetails', params:{propertyId:7},initial:false})}>  
             <Text style={styles.secondaryButtonText}>Go to Wallet</Text>
           </TouchableOpacity>
         </View>
@@ -88,7 +89,7 @@ const HomeScreen = () => {
             <Text style={styles.propertyValue}>8.4% p.a</Text>
           </View>
 
-          <TouchableOpacity style={styles.cardButton}>
+          <TouchableOpacity style={styles.cardButton} onPress={()=>navigation.navigate('Home',{screen:'Notifications', params:{propertyId:8}, initial:false})}>
             <Text style={styles.cardButtonText}>View Details</Text>
           </TouchableOpacity>
         </View>

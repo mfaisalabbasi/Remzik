@@ -19,7 +19,7 @@ const transactions = [
   { id: '3', type: 'Payout', amount: '+$160', date: '3 days ago' },
 ];
 
-const TransactionHistoryScreen = () => {
+const TransactionHistoryScreen = ({navigation}) => {
   return (
     <View style={{flex:1, backgroundColor:'#ffffff'}}>
       <SafeAreaView
@@ -43,7 +43,15 @@ const TransactionHistoryScreen = () => {
                     }
                   />
     <SafeAreaView style={styles.container}>
+      <View style={{flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,}}>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+                      <Text style={styles.back}>←</Text>
+                    </TouchableOpacity>
       <Text style={styles.header}>Transaction History</Text>
+      </View>
 
       <FlatList
         data={transactions}
@@ -72,7 +80,10 @@ const styles = StyleSheet.create({
     color: '#0B3D2E',
     marginBottom: 20,
   },
-
+back:{
+   fontSize: 22,
+    color: '#0B3D2E',
+},
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',

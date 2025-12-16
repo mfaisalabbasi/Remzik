@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image , TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import colors from '../theme/colors';
-const Header = () => {
+const Header = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.left}>
@@ -17,7 +17,7 @@ const Header = () => {
         </View>
       </View>
 
-     <TouchableOpacity>
+     <TouchableOpacity onPress={()=>navigation.navigate('Notifications')}>
                  <Ionicons name="notifications-outline" color={colors.background} size={25} />
                </TouchableOpacity>
     </View>

@@ -38,7 +38,13 @@ const DepositScreen = ({ navigation }) => {
                     }
                   />
     <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={styles.back}>←</Text>
+              </TouchableOpacity>
       <Text style={styles.title}>Deposit Funds</Text>
+         <View style={{ width: 24 }} />
+      </View>
 
       <TouchableOpacity style={styles.methodBtn}>
         <Text style={styles.methodText}>Bank Transfer</Text>
@@ -59,12 +65,22 @@ const DepositScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#ffffff', margin: 25 ,marginTop:30},
+  header:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,
+
+  },
+  back: {
+    fontSize: 22,
+    color: '#0B3D2E',
+  },
 
   title: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: '700',
     color: '#0B3D2E',
-    marginBottom: 20,
     
   },
 

@@ -13,7 +13,7 @@ import colors from '../../theme/colors';
 import Header from '../../components/Header';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const WithdrawScreen = () => {
+const WithdrawScreen = ({navigation}) => {
   return (
     <View style={{flex:1,backgroundColor:'#ffffff'}}>
       <SafeAreaView
@@ -37,7 +37,16 @@ const WithdrawScreen = () => {
                     }
                   />
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Withdraw Funds</Text>
+      <View style={{flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: 16,}}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <Text style={styles.back}>←</Text>
+                          </TouchableOpacity>
+            <Text style={styles.header}>Withdraw Funds</Text>
+            </View>
+      
 
       <View style={styles.card}>
         <Text style={styles.label}>Available Balance</Text>

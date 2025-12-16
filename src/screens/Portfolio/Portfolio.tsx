@@ -30,11 +30,12 @@ const holdings = [
 ];
 
 const PortfolioOverviewScreen = ({ navigation }) => {
+  console.log('portfoliooo,...', navigation)
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.card}
       onPress={() =>
-        navigation.navigate('HoldingDetail', { holdingId: item.id })
+        navigation.navigate('HoldingDetails', { holdingId: item.id })
       }
     >
       <Text style={styles.propertyName}>{item.name}</Text>

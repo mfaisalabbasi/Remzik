@@ -19,7 +19,7 @@ const helps = [
   'Contact Support',
 ];
 
-const HelpCenterScreen = () => {
+const HelpCenterScreen = ({navigation}) => {
   return (
     <View style={{flex:1,backgroundColor:'#ffffff'}}>
          <SafeAreaView

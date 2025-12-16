@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, StatusBar,Platform,FlatList, SafeAreaView, ScrollView, RefreshControl,TouchableOpacity} from 'react-native';
-import Header from '../components/Header';
+import Header from '../../components/Header';
 const { width } = Dimensions.get('window');
-import colors from '../theme/colors';
+import colors from '../../theme/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
@@ -12,19 +12,19 @@ const slides = [
     id: '1',
     title: 'Welcome to Al-Mizan Protocol',
     description: 'Tokenize real-world assets in a Shariah-compliant way.',
-    image: require('../assets/onboarding/slide1.png'), // replace with your image
+    image: require('../../assets/onboarding/slide1.png'), // replace with your image
   },
   {
     id: '2',
     title: 'Invest in Real Estate',
     description: 'Start investing with minimal hassle and full transparency.',
-    image: require('../assets/onboarding/slide2.png'),
+    image: require('../../assets/onboarding/slide2.png'),
   },
   {
     id: '3',
     title: 'Track Your Assets',
     description: 'Monitor and manage your tokenized assets anytime, anywhere. ',
-    image: require('../assets/onboarding/slide3.png'),
+    image: require('../../assets/onboarding/slide3.png'),
   },
 ];
 

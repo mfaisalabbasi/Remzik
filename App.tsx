@@ -6,7 +6,7 @@
  */
 import React, { useEffect } from 'react';
 import AppNavigator from './src/navigation/AppNavigator';
-import OnBoarding from './src/screens/OnBoarding';
+import OnBoarding from './src/screens/Auth/OnBoarding';
 import { View } from 'react-native';
 import BootSplash from 'react-native-bootsplash'
 

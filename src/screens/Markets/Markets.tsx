@@ -34,7 +34,7 @@ const MarketListScreen = ({ navigation }) => {
     <TouchableOpacity
       style={styles.card}
       onPress={() =>
-        navigation.navigate('MarketPropertyDetail', { property: item })
+        navigation.navigate('MarketDetails', { property: item })
       }
     >
       <Text style={styles.name}>{item.name}</Text>

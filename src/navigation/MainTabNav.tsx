@@ -1,18 +1,13 @@
 // src/navigation/TabNavigator.js
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
- import HomeScreen from '../screens/Home/HomeScreen';
-// import MarketScreen from '../screens/Market/MarketScreen';
-// import PortfolioScreen from '../screens/Portfolio/PortfolioScreen';
-// import WalletScreen from '../screens/Wallet/WalletScreen';
-// import MoreScreen from '../screens/Settings/MoreScreen';
-
+import HomeStack from './Stacks/HomeStack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import colors from '../theme/colors';
-import PortfolioOverviewScreen from '../screens/Portfolio/Portfolio';
-import MarketListScreen from '../screens/Markets/Markets';
-import WalletOverviewScreen from '../screens/Wallet/Wallet';
-import MoreScreen from '../screens/MoreScreens/More';
+import PortfolioStack from './Stacks/PortfolioStack';
+import MarketStack from './Stacks/MarketStack';
+import WalletStack from './Stacks/WalletStack';
+import MoreStack from './Stacks/MoreStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -32,7 +27,7 @@ export default function TabNavigator() {
     >
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeStack}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home-outline" color={color} size={22} />
@@ -42,7 +37,7 @@ export default function TabNavigator() {
 
       <Tab.Screen
         name="Portfolio"
-        component={PortfolioOverviewScreen}
+        component={PortfolioStack}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="pie-chart-outline" color={color} size={22} />
@@ -52,7 +47,7 @@ export default function TabNavigator() {
 
       <Tab.Screen
         name="Market"
-        component={MarketListScreen}
+        component={MarketStack}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="search-outline" color={color} size={22} />
@@ -62,7 +57,7 @@ export default function TabNavigator() {
 
       <Tab.Screen
         name="Wallet"
-        component={WalletOverviewScreen}
+        component={WalletStack}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="wallet-outline" color={color} size={22} />
@@ -72,7 +67,7 @@ export default function TabNavigator() {
 
       <Tab.Screen
         name="More"
-        component={MoreScreen}
+        component={MoreStack}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="menu-outline" color={color} size={22} />

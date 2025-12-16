@@ -61,7 +61,7 @@ const WalletOverviewScreen = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.linkBtn}
-        onPress={() => navigation.navigate('TransactionHistory')}
+        onPress={() => navigation.navigate('Transaction')}
       >
         <Text style={styles.linkText}>View Transaction History</Text>
       </TouchableOpacity>

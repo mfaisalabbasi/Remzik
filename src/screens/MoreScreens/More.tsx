@@ -16,8 +16,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const items = [
   { title: 'Profile', screen: 'Profile' },
   { title: 'Documents', screen: 'Documents' },
-  { title: 'Help Center', screen: 'HelpCenter' },
-  { title: 'Settings', screen: 'Settings' },
+  { title: 'Help Center', screen: 'Help' },
+  { title: 'Settings', screen: 'Setting' },
 ];
 
 const MoreScreen = ({ navigation }) => {
