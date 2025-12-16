@@ -39,7 +39,7 @@ const OnboardingScreen = ({ navigation }) => {
 
   const renderItem = ({ item }) => (
     <View style={styles.slide}>
-      <TouchableOpacity style={{width:'100%', alignItems:'flex-end',}}><Text style={{color:colors.primary}}>Skip</Text></TouchableOpacity>
+      <TouchableOpacity onPress={()=>navigation.navigate('Signup')} style={{width:'100%', alignItems:'flex-end',}}><Text style={{color:colors.primary}}>Skip</Text></TouchableOpacity>
       <Image source={item.image} style={styles.image} resizeMode="cover" />
       <Text style={styles.title}>{item.title}</Text>
       <Text style={styles.description}>{item.description}</Text>
@@ -59,7 +59,7 @@ const OnboardingScreen = ({ navigation }) => {
           style={styles.button}
           onPress={() => {
             // Navigate to your main app screen
-            navigation.replace('Home'); // replace 'Home' with your screen name
+            navigation.navigate('Login'); // replace 'Home' with your screen name
           }}
         >
           <Text style={styles.buttonText}>Get Started</Text>

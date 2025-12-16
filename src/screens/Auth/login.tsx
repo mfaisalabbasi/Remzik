@@ -25,10 +25,8 @@ export default function login ({ navigation }) {
               </SafeAreaView>
               <Header
         title="Remzik"
-        onProfilePress={() => navigation.navigate('Profile')}
-        onNotifPress={() => navigation.navigate('Notifications')}
         left={
-          <TouchableOpacity onPress={() => navigation.toggleDrawer?.()}>
+          <TouchableOpacity onPress={() => navigation.navigate('Onboarding')}>
             <Ionicons name="menu-outline" size={26} color={colors.card} />
           </TouchableOpacity>
         }
@@ -61,7 +59,7 @@ export default function login ({ navigation }) {
 
       <View style={styles.footerRow}>
         <Text style={styles.footerText}>New User ? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
           <Text style={styles.footerLink}>Sign Up</Text>
         </TouchableOpacity>
       </View>

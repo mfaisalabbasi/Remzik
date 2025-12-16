@@ -12,9 +12,11 @@ import colors from '../../theme/colors';
 import Header from '../../components/Header';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Screen } from 'react-native-screens';
+import { useNavigation } from '@react-navigation/native';
 
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = () => {
+  const navigation = useNavigation()
   return (
     <View style={{flex:1}}>
        <SafeAreaView
@@ -63,11 +65,13 @@ const HomeScreen = ({navigation}) => {
 
         {/* Quick Actions */}
         <View style={styles.quickActions}>
-          <TouchableOpacity style={styles.primaryButton}>
+          <TouchableOpacity style={styles.primaryButton} onPress={()=>navigation.navigate('Market',{
+            screen:'Markets'
+          })}>
             <Text style={styles.primaryButtonText}>Invest Now</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.secondaryButton} onPress={()=>navigation.navigate('Market',{screen:'MarketDetails', params:{propertyId:7},initial:false})}>  
+          <TouchableOpacity style={styles.secondaryButton} onPress={()=>navigation.navigate('Wallet',{screen:'Wallet', params:{propertyId:7},initial:false})}>  
             <Text style={styles.secondaryButtonText}>Go to Wallet</Text>
           </TouchableOpacity>
         </View>
@@ -89,7 +93,7 @@ const HomeScreen = ({navigation}) => {
             <Text style={styles.propertyValue}>8.4% p.a</Text>
           </View>
 
-          <TouchableOpacity style={styles.cardButton} onPress={()=>navigation.navigate('Home',{screen:'Notifications', params:{propertyId:8}, initial:false})}>
+          <TouchableOpacity style={styles.cardButton} onPress={()=>navigation.navigate('Market',{screen:'MarketDetails', params:{propertyId:8}, initial:false})}>
             <Text style={styles.cardButtonText}>View Details</Text>
           </TouchableOpacity>
         </View>
