@@ -1,28 +1,20 @@
 // PortfolioCard.js
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import colors from '../theme/colors';
+import { useNavigation } from '@react-navigation/native';
 
 const PRIMARY_GREEN = '#0F5234';
 const ACCENT_GOLD = '#B8860B';
 
-const PortfolioCard = ({ navigation }) => {
+const PortfolioCard = ( ) => {
   
-  const handleInvestNow = () => {
-    // Navigate to a main investment listing or guided flow
-    // Example: navigation.navigate('Market', { screen: 'AllListings' });
-    console.log("Navigating to Invest Flow");
-  };
-
-  const handleGoToWallet = () => {
-    // Navigate to the main wallet screen (assuming it's a top-level route)
-    navigation.navigate('WalletStack'); // Ensure 'WalletStack' is correct
-  };
-
+const navigation = useNavigation()
   return (
     <View style={styles.card}>
-      <Text style={styles.greeting}>Assalamu Alaikum, Faisal</Text>
+      <Text style={styles.greeting}>Hi, Faisal</Text>
 
-      <Text style={styles.valueLabel}>Total Portfolio Value</Text>
+      <Text style={styles.valueLabel}>Portfolio Value</Text>
       <Text style={styles.primaryValue}>$12,450.00</Text> 
 
       <View style={styles.incomeRow}>
@@ -34,7 +26,7 @@ const PortfolioCard = ({ navigation }) => {
         {/* Invest Now Button (Accent color) */}
         <TouchableOpacity 
           style={[styles.buttonBase, styles.investButton]}
-          onPress={handleInvestNow}
+          onPress={()=>navigation.navigate('Market',{screen:'Markets'})}
         >
           <Text style={styles.investText}>Invest Now</Text>
         </TouchableOpacity>
@@ -42,7 +34,7 @@ const PortfolioCard = ({ navigation }) => {
         {/* Go to Wallet Button (Outline style) */}
         <TouchableOpacity 
           style={[styles.buttonBase, styles.walletButton]}
-          onPress={handleGoToWallet}
+          onPress={()=>navigation.navigate('Wallet', {screen:'Wallet'})}
         >
           <Text style={styles.walletText}>Go to Wallet</Text>
         </TouchableOpacity>
@@ -53,27 +45,28 @@ const PortfolioCard = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: PRIMARY_GREEN,
-    padding: 20,
-    margin: 20,
-    borderRadius: 12,
+    backgroundColor:colors.primary,
+    padding: 15,
+    marginBottom:30,
+    borderBottomRightRadius:0,
+    borderBottomLeftRadius:0
+  
   },
   greeting: {
     color: '#D4D4D4',
     fontSize: 14,
-    marginBottom: 5,
   },
   valueLabel: {
-    color: '#fff',
+    color: colors.accent,
     fontSize: 16,
     fontWeight: '600',
     marginTop: 10,
   },
   primaryValue: {
     color: '#fff',
-    fontSize: 34,
-    fontWeight: '800', // Extra bold for impact
-    marginBottom: 20,
+    fontSize: 30,
+    fontWeight: '700', // Extra bold for impact
+    marginBottom: 10,
   },
   incomeRow: {
     flexDirection: 'row',
@@ -94,32 +87,32 @@ const styles = StyleSheet.create({
   buttonGroup: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 25,
+    marginTop: 15,
   },
   buttonBase: {
     flex: 1,
     paddingVertical: 12,
-    borderRadius: 8,
+    borderRadius: 50,
     alignItems: 'center',
     marginHorizontal: 5,
   },
   investButton: {
-    backgroundColor: ACCENT_GOLD,
+    backgroundColor: colors.accent ,
     borderWidth: 1,
-    borderColor: ACCENT_GOLD,
+    borderColor: colors.accent,
   },
   investText: {
-    color: PRIMARY_GREEN,
+    color: '#ffffff',
     fontSize: 15,
     fontWeight: '700',
   },
   walletButton: {
-    backgroundColor: 'transparent',
+    backgroundColor: '#ffffff',
     borderWidth: 1,
     borderColor: '#fff',
   },
   walletText: {
-    color: '#fff',
+    color: colors.primary,
     fontSize: 15,
     fontWeight: '700',
   },

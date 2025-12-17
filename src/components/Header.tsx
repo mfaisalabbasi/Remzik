@@ -11,7 +11,7 @@ const Header = () => {
         {/* Logo */}
         <Image
           source={require('../assets/remzik.png')}
-          style={{ width: 50, height: 50, resizeMode: 'contain' }}
+          style={{ width: 50, height: 70, resizeMode: 'cover' }}
         />
         <View>
           <Text style={styles.appName}>Remzik</Text>
@@ -20,7 +20,7 @@ const Header = () => {
       </View>
 
      <TouchableOpacity onPress={()=>navigation.navigate('Notifications')}>
-                 <Ionicons name="notifications-outline" color={colors.background} size={25} />
+                 <Ionicons name="notifications-outline" color={colors.background} size={30} />
                </TouchableOpacity>
     </View>
   );
@@ -30,14 +30,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.primary,
     width: '100%',
-    paddingTop: 15,
-    paddingBottom: 10,
     paddingHorizontal: 12,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
+
   },
   left: {
     flexDirection: 'row',
@@ -45,13 +44,13 @@ const styles = StyleSheet.create({
   },
   appName: {
     color: 'white',
-    fontSize: 14,
+    fontSize: 26,
     fontWeight: '700',
     letterSpacing: 0.5,
   },
   subText: {
     color: colors.accent,
-    fontSize: 10,
+    fontSize: 14,
   },
   region: {
     color: 'white',

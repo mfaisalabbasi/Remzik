@@ -8,9 +8,8 @@ import {
   StatusBar,
   FlatList
 } from 'react-native';
-import colors from '../../theme/colors';
-import Header from '../../components/Header';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import PortfolioSummaryCard from '../../components/PortfolioSummaryCard';
+
 
 const holdings = [
   {
@@ -30,7 +29,6 @@ const holdings = [
 ];
 
 const PortfolioOverviewScreen = ({ navigation }) => {
-  console.log('portfoliooo,...', navigation)
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.card}
@@ -60,29 +58,9 @@ const PortfolioOverviewScreen = ({ navigation }) => {
 
   return (
     <View style={{flex:1}}>
-        <SafeAreaView
-                      edges={['top']}
-                      style={{ backgroundColor: colors.primary , paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight:0}}
-                    >
-                      <StatusBar
-                        barStyle="light-content"
-                        translucent={false}
-                        backgroundColor="#0F5F3A"
-                      />
-                    </SafeAreaView>
-                    <Header
-                    title="Remzik"
-                    onProfilePress={() => navigation.navigate('Profile')}
-                    onNotifPress={() => navigation.navigate('Notifications')}
-                    left={
-                      <TouchableOpacity onPress={() => navigation.toggleDrawer?.()}>
-                        <Ionicons name="menu-outline" size={26} color={colors.card} />
-                      </TouchableOpacity>
-                    }
-                  />
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>My Portfolio</Text>
+    <PortfolioSummaryCard/>
 
+    <SafeAreaView style={styles.container}>
       <FlatList
         data={holdings}
         keyExtractor={(item) => item.id}

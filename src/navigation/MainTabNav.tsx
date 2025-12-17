@@ -8,10 +8,14 @@ import PortfolioStack from './Stacks/PortfolioStack';
 import MarketStack from './Stacks/MarketStack';
 import WalletStack from './Stacks/WalletStack';
 import MoreStack from './Stacks/MoreStack';
+import { useNavigation } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
+  
+  const navigation = useNavigation()
   return (
     <Tab.Navigator
       screenOptions={{
@@ -42,6 +46,9 @@ export default function TabNavigator() {
           tabBarIcon: ({ color }) => (
             <Ionicons name="pie-chart-outline" color={color} size={22} />
           ),
+          
+          
+        
         }}
       />
 

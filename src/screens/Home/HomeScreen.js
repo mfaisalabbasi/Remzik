@@ -13,6 +13,8 @@ import Header from '../../components/Header';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Screen } from 'react-native-screens';
 import { useNavigation } from '@react-navigation/native';
+import PortfolioCard from '../../components/PortfolioCard';
+import FeaturedPropertyCard from '../../components/FeaturedProperty';
 
 
 const HomeScreen = () => {
@@ -43,65 +45,13 @@ const HomeScreen = () => {
      
       <ScrollView showsVerticalScrollIndicator={false}>
 
-        {/* Header */}
-        <View style={styles.header}>
-          <View>
-            <Text style={styles.greeting}>Assalamu Alaikum</Text>
-            <Text style={styles.username}>Faisal</Text>
-          </View>
+       <PortfolioCard/>
 
-        </View>
-
-        {/* Portfolio Summary */}
-        <View style={styles.portfolioCard}>
-          <Text style={styles.sectionLabel}>Total Portfolio Value</Text>
-          <Text style={styles.portfolioValue}>$12,450.00</Text>
-
-          <View style={styles.divider} />
-
-          <Text style={styles.sectionLabel}>Expected Monthly Income</Text>
-          <Text style={styles.monthlyIncome}>$320.00</Text>
-        </View>
-
-        {/* Quick Actions */}
-        <View style={styles.quickActions}>
-          <TouchableOpacity style={styles.primaryButton} onPress={()=>navigation.navigate('Market',{
-            screen:'Markets'
-          })}>
-            <Text style={styles.primaryButtonText}>Invest Now</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.secondaryButton} onPress={()=>navigation.navigate('Wallet',{screen:'Wallet', params:{propertyId:7},initial:false})}>  
-            <Text style={styles.secondaryButtonText}>Go to Wallet</Text>
-          </TouchableOpacity>
-        </View>
+       
 
         {/* Featured Properties */}
-        <Text style={styles.sectionTitle}>Featured Properties</Text>
+        <FeaturedPropertyCard/>
 
-        <View style={styles.propertyCard}>
-          <Text style={styles.propertyTitle}>Emerald Gardens Villa</Text>
-          <Text style={styles.propertyMeta}>KSA • Real Estate</Text>
-
-          <View style={styles.propertyRow}>
-            <Text style={styles.propertyLabel}>Token Price</Text>
-            <Text style={styles.propertyValue}>$56</Text>
-          </View>
-
-          <View style={styles.propertyRow}>
-            <Text style={styles.propertyLabel}>Expected Yield</Text>
-            <Text style={styles.propertyValue}>8.4% p.a</Text>
-          </View>
-
-          <TouchableOpacity style={styles.cardButton} onPress={()=>navigation.navigate('Market',{screen:'MarketDetails', params:{propertyId:8}, initial:false})}>
-            <Text style={styles.cardButtonText}>View Details</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Shariah Badge */}
-        <View style={styles.shariahBadge}>
-          <Text style={styles.shariahText}>✔ Shariah Certified</Text>
-        </View>
 
       </ScrollView>
     </SafeAreaView>
