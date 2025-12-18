@@ -14,8 +14,7 @@ import { TouchableOpacity } from 'react-native';
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
-  
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -23,9 +22,9 @@ export default function TabNavigator() {
         tabBarActiveTintColor: colors.accent,
         tabBarInactiveTintColor: 'white',
         tabBarStyle: {
-          height: 60,
-          paddingBottom: 4,
-          backgroundColor: colors.primary
+          height: 70,
+          paddingBottom: 2,
+          backgroundColor: colors.primary,
         },
       }}
     >
@@ -34,7 +33,7 @@ export default function TabNavigator() {
         component={HomeStack}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home-outline" color={color} size={22} />
+            <Ionicons name="home-outline" color={color} size={25} />
           ),
         }}
       />
@@ -44,11 +43,8 @@ export default function TabNavigator() {
         component={PortfolioStack}
         options={{
           tabBarIcon: ({ color }) => (
-            <Ionicons name="pie-chart-outline" color={color} size={22} />
+            <Ionicons name="pie-chart-outline" color={color} size={25} />
           ),
-          
-          
-        
         }}
       />
 
@@ -57,7 +53,7 @@ export default function TabNavigator() {
         component={MarketStack}
         options={{
           tabBarIcon: ({ color }) => (
-            <Ionicons name="search-outline" color={color} size={22} />
+            <Ionicons name="search-outline" color={color} size={25} />
           ),
         }}
       />
@@ -67,7 +63,7 @@ export default function TabNavigator() {
         component={WalletStack}
         options={{
           tabBarIcon: ({ color }) => (
-            <Ionicons name="wallet-outline" color={color} size={22} />
+            <Ionicons name="wallet-outline" color={color} size={25} />
           ),
         }}
       />
@@ -77,7 +73,7 @@ export default function TabNavigator() {
         component={MoreStack}
         options={{
           tabBarIcon: ({ color }) => (
-            <Ionicons name="menu-outline" color={color} size={22} />
+            <Ionicons name="menu-outline" color={color} size={25} />
           ),
         }}
       />

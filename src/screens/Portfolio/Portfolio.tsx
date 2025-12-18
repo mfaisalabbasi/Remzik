@@ -6,10 +6,10 @@ import {
   ScrollView,
   TouchableOpacity,
   StatusBar,
-  FlatList
+  FlatList,
 } from 'react-native';
 import PortfolioSummaryCard from '../../components/PortfolioSummaryCard';
-
+import InvestmentItemCard from '../../components/InvestmentItemCard';
 
 const holdings = [
   {
@@ -49,26 +49,24 @@ const PortfolioOverviewScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.incomeBadge}>
-        <Text style={styles.incomeText}>
-          Monthly Income: ${item.income}
-        </Text>
+        <Text style={styles.incomeText}>Monthly Income: ${item.income}</Text>
       </View>
     </TouchableOpacity>
   );
 
   return (
-    <View style={{flex:1}}>
-    <PortfolioSummaryCard/>
+    <View style={{ flex: 1, backgroundColor: '#ffffff' }}>
+      <PortfolioSummaryCard />
 
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={holdings}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-        contentContainerStyle={{ padding: 20 }}
-        showsVerticalScrollIndicator={false}
-      />
-    </SafeAreaView>
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          data={holdings}
+          keyExtractor={item => item.id}
+          renderItem={renderItem}
+          contentContainerStyle={{ padding: 20 }}
+          showsVerticalScrollIndicator={false}
+        />
+      </SafeAreaView>
     </View>
   );
 };
@@ -76,7 +74,7 @@ const PortfolioOverviewScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#ffffff',
   },
 
   header: {
@@ -88,10 +86,16 @@ const styles = StyleSheet.create({
   },
 
   card: {
+    width: '100%',
     backgroundColor: '#F9FAFB',
     borderRadius: 18,
     padding: 16,
     marginBottom: 16,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
 
   propertyName: {

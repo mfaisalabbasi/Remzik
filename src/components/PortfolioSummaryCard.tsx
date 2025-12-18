@@ -3,68 +3,80 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import colors from '../theme/colors';
 import { useNavigation } from '@react-navigation/native';
-// NOTE: For the Pie Chart visual, you would need a library like 'react-native-svg' and 'react-native-chart-kit'. 
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+// NOTE: For the Pie Chart visual, you would need a library like 'react-native-svg' and 'react-native-chart-kit'.
 // We are using a simple placeholder for the visual area here.
 
 const PRIMARY_GREEN = '#0F5234';
-const ACCENT_GREEN = '#4CAF50'; 
+const ACCENT_GREEN = '#4CAF50';
 const ACCENT_GOLD = '#B8860B';
 const LIGHT_GREY = '#F5F5F5';
 
 const PieChartPlaceholder = () => (
-    <View style={styles.pieChartPlaceholder}>
-        <Text style={{ fontSize: 8 }}>Chart</Text>
-    </View>
+  <View style={styles.pieChartPlaceholder}>
+    <Text style={{ fontSize: 8 }}>Chart</Text>
+  </View>
 );
 
-const PortfolioSummaryCard = ( ) => {
-  const isPositive =" data.change24H.startsWith('+')";
+const PortfolioSummaryCard = () => {
+  const isPositive = " data.change24H.startsWith('+')";
 
-  const handleAnalytics = () => console.log("Navigating to Analytics");
-  const handleDeposit = () => console.log("Navigating to Deposit");
+  const handleAnalytics = () => console.log('Navigating to Analytics');
+  const handleDeposit = () => console.log('Navigating to Deposit');
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
-      
       {/* 1. DARK GREEN FOCUS AREA: Total Value & Pie Chart */}
       <View style={styles.darkSection}>
-        <Text style={styles.greeting}>Assalamu Alaikum, Faisal</Text>
         <View style={styles.valueRow}>
-            <View>
-                <Text style={styles.valueLabel}>Total Portfolio Value</Text>
-                <Text style={styles.primaryValue}>data</Text>
-                
-                <View style={styles.incomeRow}>
-                    <Text style={styles.incomeText}>Total Monthly Income: </Text>
-                    <Text style={styles.incomeValue}>data</Text>
-                </View>
+          <View>
+            <Text style={styles.valueLabel}> Portfolio Value</Text>
+            <Text style={styles.primaryValue}>$33,3000</Text>
+
+            <View style={styles.incomeRow}>
+              <Text style={styles.incomeText}>Total Monthly Income: </Text>
+              <Text style={styles.incomeValue}>2000</Text>
             </View>
-            <PieChartPlaceholder />
+          </View>
+          <Ionicons name="stats-chart" color={colors.background} size={80} />
         </View>
       </View>
 
       {/* 2. LIGHT METRICS AREA: Secondary Metrics & Actions */}
       <View style={styles.lightSection}>
-        
         {/* Performance & Growth Row */}
         <View style={styles.metricsRow}>
-          <Text style={styles.performanceLabel}>All-time Growth: 
+          <Text style={styles.performanceLabel}>
+            All-time Growth:
             <Text style={{ color: ACCENT_GREEN, fontWeight: 'bold' }}> 20</Text>
           </Text>
-          <Text style={{ color: isPositive ? ACCENT_GREEN : 'red', fontWeight: 'bold' }}>24</Text>
+          <Text
+            style={{
+              color: isPositive ? ACCENT_GREEN : 'red',
+              fontWeight: 'bold',
+            }}
+          >
+            24
+          </Text>
         </View>
 
         {/* Action Buttons */}
         <View style={styles.buttonRow}>
-            <TouchableOpacity style={styles.analyticsButton} onPress={handleAnalytics}>
-                <Text style={styles.analyticsText}>View Analytics</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.depositButton} onPress={()=>navigation.navigate('Wallet',{screen:'Deposit'})}>
-                <Text style={styles.depositText}>Deposit Funds</Text>
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.analyticsButton}
+            onPress={handleAnalytics}
+          >
+            <Text style={styles.analyticsText}>View Analytics</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.depositButton}
+            onPress={() => navigation.navigate('Wallet', { screen: 'Deposit' })}
+          >
+            <Text style={styles.depositText}>Deposit Funds</Text>
+          </TouchableOpacity>
         </View>
-
       </View>
     </View>
   );
@@ -72,23 +84,23 @@ const PortfolioSummaryCard = ( ) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 20,
-    marginTop: 10,
-    borderRadius: 12,
+    marginHorizontal: 0,
+    marginTop: 0,
+    borderRadius: 0,
     overflow: 'hidden',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 5,
-    elevation: 5,
+    elevation: 0,
   },
   // --- Dark Section (Focus) ---
   darkSection: {
-    backgroundColor: PRIMARY_GREEN,
+    backgroundColor: colors.primary,
     padding: 20,
   },
   greeting: {
-    color: '#D4D4D4',
+    color: colors.accent,
     fontSize: 14,
     marginBottom: 10,
   },
@@ -98,24 +110,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   pieChartPlaceholder: {
-      width: 80,
-      height: 80,
-      borderRadius: 40,
-      backgroundColor: '#E8F5E9',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderWidth: 5,
-      borderColor: '#3a7259',
+    width: 90,
+    height: 90,
+    borderRadius: 50,
+    backgroundColor: '#ffffff',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   valueLabel: {
-    color: '#D4D4D4',
-    fontSize: 14,
+    color: colors.accent,
+    fontSize: 12,
     fontWeight: '500',
   },
   primaryValue: {
     color: '#fff',
-    fontSize: 34,
-    fontWeight: '800', 
+    fontSize: 33,
+    fontWeight: '500',
     marginTop: 5,
   },
   incomeRow: {
@@ -123,11 +133,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   incomeText: {
-    color: '#D4D4D4',
+    color: colors.accent,
     fontSize: 14,
   },
   incomeValue: {
-    color: '#fff',
+    color: '#ffffff',
     fontSize: 14,
     fontWeight: 'bold',
   },
@@ -147,8 +157,8 @@ const styles = StyleSheet.create({
     borderBottomColor: LIGHT_GREY,
   },
   performanceLabel: {
-      fontSize: 13,
-      color: '#555',
+    fontSize: 13,
+    color: '#555',
   },
   buttonRow: {
     flexDirection: 'row',
@@ -163,8 +173,8 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   analyticsText: {
-      color: '#fff',
-      fontWeight: '600',
+    color: '#fff',
+    fontWeight: '600',
   },
   depositButton: {
     flex: 1,
@@ -175,9 +185,9 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   depositText: {
-    color: "#ffffff",
+    color: '#ffffff',
     fontWeight: '600',
-  }
+  },
 });
 
 export default PortfolioSummaryCard;

@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
 } from 'react-native';
 import colors from '../../theme/colors';
 import Header from '../../components/Header';
@@ -16,45 +16,41 @@ import { useNavigation } from '@react-navigation/native';
 import PortfolioCard from '../../components/PortfolioCard';
 import FeaturedPropertyCard from '../../components/FeaturedProperty';
 
-
 const HomeScreen = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   return (
-    <View style={{flex:1}}>
-       <SafeAreaView
-              edges={['top']}
-              style={{ backgroundColor: colors.primary , paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight:0}}
-            >
-              <StatusBar
-                barStyle="light-content"
-                translucent={false}
-                backgroundColor="#0F5F3A"
-              />
-            </SafeAreaView>
-             <Header
-                    title="Remzik"
-                    onProfilePress={() => navigation.navigate('Profile')}
-                    onNotifPress={() => navigation.navigate('Notifications')}
-                    left={
-                      <TouchableOpacity onPress={() => navigation.toggleDrawer?.()}>
-                        <Ionicons name="menu-outline" size={26} color={colors.card} />
-                      </TouchableOpacity>
-                    }
-                  />
-    <SafeAreaView style={styles.container}>
-     
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <View style={{ flex: 1 }}>
+      <SafeAreaView
+        edges={['top']}
+        style={{
+          backgroundColor: colors.primary,
+          paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+        }}
+      >
+        <StatusBar
+          barStyle="light-content"
+          translucent={false}
+          backgroundColor="#0F5F3A"
+        />
+      </SafeAreaView>
+      <Header
+        title="Remzik"
+        onProfilePress={() => navigation.navigate('Profile')}
+        onNotifPress={() => navigation.navigate('Notifications')}
+        left={
+          <TouchableOpacity onPress={() => navigation.toggleDrawer?.()}>
+            <Ionicons name="menu-outline" size={26} color={colors.card} />
+          </TouchableOpacity>
+        }
+      />
+      <SafeAreaView style={styles.container}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <PortfolioCard />
 
-       <PortfolioCard/>
-
-       
-
-        {/* Featured Properties */}
-        <FeaturedPropertyCard/>
-
-
-      </ScrollView>
-    </SafeAreaView>
+          {/* Featured Properties */}
+          <FeaturedPropertyCard />
+        </ScrollView>
+      </SafeAreaView>
     </View>
   );
 };
@@ -96,7 +92,7 @@ const styles = StyleSheet.create({
 
   portfolioCard: {
     marginHorizontal: 20,
-    backgroundColor:colors.primary,
+    backgroundColor: colors.primary,
     borderRadius: 20,
     padding: 20,
     marginBottom: 20,
@@ -124,7 +120,7 @@ const styles = StyleSheet.create({
     color: '#FDE68A',
     fontSize: 22,
     fontWeight: '600',
-    padding:2
+    padding: 2,
   },
 
   quickActions: {

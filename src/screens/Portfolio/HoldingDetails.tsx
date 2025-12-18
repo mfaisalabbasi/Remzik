@@ -6,7 +6,8 @@ import {
   ScrollView,
   TouchableOpacity,
   StatusBar,
-  FlatList
+  FlatList,
+  Image,
 } from 'react-native';
 import colors from '../../theme/colors';
 import Header from '../../components/Header';
@@ -14,65 +15,66 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const HoldingDetailScreen = ({ navigation }) => {
   return (
-    <View style={{flex:1}}>
-         <SafeAreaView
-                              edges={['top']}
-                              style={{ backgroundColor: colors.primary , paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight:0}}
-                            >
-                              <StatusBar
-                                barStyle="light-content"
-                                translucent={false}
-                                backgroundColor="#0F5F3A"
-                              />
-                            </SafeAreaView>
+    <View style={{ flex: 1 }}>
+      <SafeAreaView
+        edges={['top']}
+        style={{
+          backgroundColor: colors.primary,
+          paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+        }}
+      >
+        <StatusBar
+          barStyle="light-content"
+          translucent={false}
+          backgroundColor="#0F5F3A"
+        />
+      </SafeAreaView>
 
-                            <Header
-                    title="Remzik"
-                    onProfilePress={() => navigation.navigate('Profile')}
-                    onNotifPress={() => navigation.navigate('Notifications')}
-                    left={
-                      <TouchableOpacity onPress={() => navigation.toggleDrawer?.()}>
-                        <Ionicons name="menu-outline" size={26} color={colors.card} />
-                      </TouchableOpacity>
-                    }
-                  />
-    <SafeAreaView style={styles.container}>
-      
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.back}>←</Text>
+      <SafeAreaView style={styles.container}>
+        {/* Header */}
+        {/* <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Text style={styles.back}>←</Text>
+          </TouchableOpacity>
+          <Text style={styles.title}>Holding Detail</Text>
+          <View style={{ width: 24 }} />
+        </View> */}
+
+        {/* Details */}
+        <TouchableOpacity
+          style={styles.backarrow}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="arrow-back" size={25} color={colors.primary} />
         </TouchableOpacity>
-        <Text style={styles.title}>Holding Detail</Text>
-        <View style={{ width: 24 }} />
-      </View>
+        <View style={styles.card}>
+          <Image
+            source={require('../../assets/onboarding/featured.jpg')}
+            style={styles.propertyImage}
+          />
+          <Text style={styles.propertyName}>Emerald Gardens Villa</Text>
 
-      {/* Details */}
-      <View style={styles.card}>
-        <Text style={styles.propertyName}>Emerald Gardens Villa</Text>
+          <View style={styles.row}>
+            <Text style={styles.label}>Ownership</Text>
+            <Text style={styles.value}>2.4%</Text>
+          </View>
 
-        <View style={styles.row}>
-          <Text style={styles.label}>Ownership</Text>
-          <Text style={styles.value}>2.4%</Text>
+          <View style={styles.row}>
+            <Text style={styles.label}>Investment Value</Text>
+            <Text style={styles.value}>$6,450</Text>
+          </View>
+
+          <View style={styles.row}>
+            <Text style={styles.label}>Monthly Income</Text>
+            <Text style={styles.value}>$160</Text>
+          </View>
         </View>
 
-        <View style={styles.row}>
-          <Text style={styles.label}>Investment Value</Text>
-          <Text style={styles.value}>$6,450</Text>
-        </View>
-
-        <View style={styles.row}>
-          <Text style={styles.label}>Monthly Income</Text>
-          <Text style={styles.value}>$160</Text>
-        </View>
-      </View>
-
-      {/* Documents */}
-      <TouchableOpacity style={styles.documentBtn}>
-        <Text style={styles.documentText}>View Documents</Text>
-      </TouchableOpacity>
-
-    </SafeAreaView>
+        {/* Documents */}
+        <TouchableOpacity style={styles.documentBtn}>
+          <Text style={styles.documentText}>View Documents</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
     </View>
   );
 };
@@ -80,7 +82,15 @@ const HoldingDetailScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#ffffff',
+  },
+  backarrow: { marginLeft: 10, marginTop: 20 },
+  propertyImage: {
+    width: '100%',
+    height: 200,
+    backgroundColor: '#eee',
+    borderRadius: 5,
+    marginBottom: 20,
   },
 
   header: {
@@ -104,8 +114,9 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#F9FAFB',
     borderRadius: 18,
-    padding: 16,
-    margin: 20,
+    padding: 10,
+    margin: 5,
+    marginTop: 20,
   },
 
   propertyName: {
