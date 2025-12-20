@@ -3,86 +3,156 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
-  ScrollView,
   TouchableOpacity,
-  StatusBar,
-  FlatList
+  ScrollView,
+  Image,
 } from 'react-native';
-import colors from '../../theme/colors';
-import Header from '../../components/Header';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const items = [
-  { title: 'Profile', screen: 'Profile' },
-  { title: 'Documents', screen: 'Documents' },
-  { title: 'Help Center', screen: 'Help' },
-  { title: 'Settings', screen: 'Setting' },
-];
+import colors from '../../theme/colors'; // your colors file
 
-const MoreScreen = ({ navigation }) => {
+const More = ({ navigation }: any) => {
+  const menuItems = [
+    { title: 'Profile & KYC', icon: 'person-outline', screen: 'Profile' },
+    {
+      title: 'Transaction History',
+      icon: 'receipt-outline',
+      screen: 'TransactionHistory',
+    },
+    {
+      title: 'Payment Methods',
+      icon: 'card-outline',
+      screen: 'PaymentMethod',
+    },
+    { title: 'Support', icon: 'headset-outline', screen: 'Help' },
+    { title: 'Settings', icon: 'settings-outline', screen: 'Setting' },
+    { title: 'Logout', icon: 'log-out-outline', screen: 'Logout' },
+  ];
+
+  const handlePress = (item: any) => {
+    if (item.screen) {
+      navigation.navigate(item.screen);
+    } else {
+      // handle logout
+      console.log('Logout pressed');
+    }
+  };
+
   return (
-    <View style={{flex:1,backgroundColor:'#ffffff'}}>
-      <SafeAreaView
-                      edges={['top']}
-                      style={{ backgroundColor: colors.primary , paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight:0}}
-                    >
-                      <StatusBar
-                        barStyle="light-content"
-                        translucent={false}
-                        backgroundColor="#0F5F3A"
-                      />
-                    </SafeAreaView>
-                    <Header
-                    title="Remzik"
-                    onProfilePress={() => navigation.navigate('Profile')}
-                    onNotifPress={() => navigation.navigate('Notifications')}
-                    left={
-                      <TouchableOpacity onPress={() => navigation.toggleDrawer?.()}>
-                        <Ionicons name="menu-outline" size={26} color={colors.card} />
-                      </TouchableOpacity>
-                    }
-                  />
-      
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>More</Text>
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.backarrow}
+        onPress={() => navigation.goBack()}
+      >
+        <Ionicons name="arrow-back" size={25} color={colors.primary} />
+      </TouchableOpacity>
+      <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
+        {/* Profile Card */}
+        <View style={styles.profileCard}>
+          <Image
+            source={require('../../assets/onboarding/slide1.png')} // placeholder avatar
+            style={styles.avatar}
+          />
+          <View style={styles.profileInfo}>
+            <Text style={styles.name}>Muhammad Faisal</Text>
+            <Text style={styles.email}>faisal@example.com</Text>
+            <View style={styles.kycStatus}>
+              <Ionicons name="checkmark-circle" size={16} color="green" />
+              <Text style={styles.kycText}>KYC Verified</Text>
+            </View>
+          </View>
+        </View>
 
-      {items.map((item) => (
-        <TouchableOpacity
-          key={item.title}
-          style={styles.item}
-          onPress={() => navigation.navigate(item.screen)}
-        >
-          <Text style={styles.text}>{item.title}</Text>
-        </TouchableOpacity>
-      ))}
-    </SafeAreaView>
+        {/* Menu Items */}
+        <View style={styles.menuContainer}>
+          {menuItems.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.menuItem}
+              onPress={() => handlePress(item)}
+            >
+              <Ionicons
+                name={item.icon as any}
+                size={24}
+                color={colors.primary}
+              />
+              <Text style={styles.menuText}>{item.title}</Text>
+              <Ionicons name="chevron-forward-outline" size={24} color="#ccc" />
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FFFFFF', padding: 20 , margin:20,marginTop:30},
+export default More;
 
-  header: {
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  backarrow: { marginLeft: 25, marginTop: 20 },
+
+  profileCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f9f9f9',
+    marginHorizontal: 20,
+    padding: 15,
+    borderRadius: 12,
+    marginBottom: 25,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 3,
+  },
+  avatar: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+  },
+  profileInfo: {
+    marginLeft: 15,
+    flex: 1,
+  },
+  name: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#0B3D2E',
-    marginBottom: 20,
+    color: '#333',
   },
-
-  item: {
-    backgroundColor: '#F9FAFB',
-    padding: 18,
-    borderRadius: 18,
-    marginBottom: 14,
+  email: {
+    fontSize: 14,
+    color: '#666',
+    marginVertical: 3,
   },
-
-  text: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: '#0B3D2E',
+  kycStatus: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 5,
+  },
+  kycText: {
+    marginLeft: 5,
+    fontSize: 13,
+    color: 'green',
+    fontWeight: '500',
+  },
+  menuContainer: {
+    paddingHorizontal: 20,
+  },
+  menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 18,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  menuText: {
+    flex: 1,
+    marginLeft: 15,
+    fontSize: 16,
+    color: '#333',
   },
 });
-
-export default MoreScreen;

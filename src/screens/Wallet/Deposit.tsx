@@ -1,98 +1,157 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
-  ScrollView,
+  TextInput,
   TouchableOpacity,
-  StatusBar,
-  FlatList
 } from 'react-native';
-import colors from '../../theme/colors';
-import Header from '../../components/Header';
+import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import colors from '../../theme/colors';
 
-const DepositScreen = ({ navigation }) => {
+export default function DepositScreen() {
+  const navigation = useNavigation();
+  const [amount, setAmount] = useState('');
+
+  const isValid = Number(amount) > 0;
+
+  const handleDeposit = () => {
+    // 1️⃣ Call API / blockchain later
+    // 2️⃣ Show success feedback
+    // 3️⃣ Navigate back to Wallet
+
+    navigation.goBack();
+  };
+
   return (
-    <View style={{flex:1,backgroundColor:"#ffffff"}}>
-
-        <SafeAreaView
-                      edges={['top']}
-                      style={{ backgroundColor: colors.primary , paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight:0}}
-                    >
-                      <StatusBar
-                        barStyle="light-content"
-                        translucent={false}
-                        backgroundColor="#0F5F3A"
-                      />
-                    </SafeAreaView>
-                    <Header
-                    title="Remzik"
-                    onProfilePress={() => navigation.navigate('Profile')}
-                    onNotifPress={() => navigation.navigate('Notifications')}
-                    left={
-                      <TouchableOpacity onPress={() => navigation.toggleDrawer?.()}>
-                        <Ionicons name="menu-outline" size={26} color={colors.card} />
-                      </TouchableOpacity>
-                    }
-                  />
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={styles.back}>←</Text>
-              </TouchableOpacity>
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.backarrow}
+        onPress={() => navigation.goBack()}
+      >
+        <Ionicons name="arrow-back" size={22} color={colors.primary} />
+      </TouchableOpacity>
+      {/* Header */}
       <Text style={styles.title}>Deposit Funds</Text>
-         <View style={{ width: 24 }} />
+      <Text style={styles.subtitle}>
+        Add funds to your Shariah-compliant wallet
+      </Text>
+
+      {/* Balance */}
+      <View style={styles.balanceBox}>
+        <Text style={styles.balanceLabel}>Current Balance</Text>
+        <Text style={styles.balanceValue}>$4,200</Text>
       </View>
 
-      <TouchableOpacity style={styles.methodBtn}>
-        <Text style={styles.methodText}>Bank Transfer</Text>
-      </TouchableOpacity>
+      {/* Amount Input */}
+      <Text style={styles.sectionLabel}>Deposit Amount</Text>
+      <TextInput
+        value={amount}
+        onChangeText={setAmount}
+        keyboardType="numeric"
+        placeholder="Enter amount"
+        style={styles.input}
+      />
 
-      <TouchableOpacity style={styles.methodBtn}>
-        <Text style={styles.methodText}>Debit / Credit Card</Text>
-      </TouchableOpacity>
+      {/* Payment Method (Placeholder) */}
+      <View style={styles.methodBox}>
+        <Text style={styles.methodText}>Payment Method</Text>
+        <Text style={styles.methodValue}>Bank Transfer</Text>
+      </View>
 
-      <TouchableOpacity style={styles.methodBtn}>
-        <Text style={styles.methodText}>Crypto</Text>
+      {/* CTA */}
+      <TouchableOpacity
+        style={[styles.button, !isValid && { opacity: 0.5 }]}
+        disabled={!isValid}
+        onPress={handleDeposit}
+      >
+        <Text style={styles.buttonText}>Confirm Deposit</Text>
       </TouchableOpacity>
-    </SafeAreaView>
     </View>
   );
-};
-
+}
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#ffffff', margin: 25 ,marginTop:30},
-  header:{
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+  container: {
+    flex: 1,
+    backgroundColor: '#F9FAFB',
     padding: 16,
+  },
 
-  },
-  back: {
-    fontSize: 22,
-    color: '#0B3D2E',
-  },
+  backarrow: { marginLeft: 0, marginVertical: 10 },
 
   title: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#0B3D2E',
-    
+    fontSize: 22,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  subtitle: {
+    fontSize: 13,
+    color: '#6B7280',
+    marginBottom: 20,
   },
 
-  methodBtn: {
-    backgroundColor: '#F9FAFB',
-    paddingVertical: 18,
-    borderRadius: 18,
+  balanceBox: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 24,
+    elevation: 1,
+  },
+  balanceLabel: {
+    fontSize: 12,
+    color: '#6B7280',
+  },
+  balanceValue: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginTop: 4,
+  },
+
+  sectionLabel: {
+    fontSize: 13,
+    marginBottom: 6,
+  },
+  input: {
+    backgroundColor: '#FFFFFF',
+    height: 50,
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    fontSize: 16,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    marginBottom: 20,
+  },
+
+  methodBox: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    padding: 14,
+    marginBottom: 30,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+  methodText: {
+    fontSize: 12,
+    color: '#6B7280',
+  },
+  methodValue: {
+    fontSize: 14,
+    fontWeight: '500',
+    marginTop: 4,
+  },
+
+  button: {
+    height: 52,
+    backgroundColor: '#0E5E4E',
+    borderRadius: 12,
     alignItems: 'center',
-    marginBottom: 14,
+    justifyContent: 'center',
   },
-
-  methodText: { fontSize: 15, fontWeight: '600', color: '#0B3D2E' },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+  },
 });
-
-export default DepositScreen;

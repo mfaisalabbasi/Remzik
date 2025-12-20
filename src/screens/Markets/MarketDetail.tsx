@@ -1,227 +1,182 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
-  StyleSheet,
-  SafeAreaView,
   ScrollView,
+  Image,
+  StyleSheet,
   TouchableOpacity,
-  StatusBar
+  Platform,
+  StatusBar,
 } from 'react-native';
-import colors from '../../theme/colors';
-import Header from '../../components/Header';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import colors from '../../theme/colors';
 
-const MarketPropertyDetailScreen = ({ navigation, route }) => {
-//   const { property } = route.params;
-//   const [tokens, setTokens] = useState(1);
-
-//   const ownership = (tokens * 0.02).toFixed(2);
-//   const payout = (tokens * property.price * 0.007).toFixed(2);
+const PropertyDetailsScreen = ({ navigation, route }) => {
+  const property = route.params?.property || {
+    title: 'Luxury Apartment in Riyadh',
+    price: 'SAR 1,200,000',
+    location: 'Riyadh, Saudi Arabia',
+    images: [
+      'https://via.placeholder./400x250',
+      'https://via.placeholder.com/400x250',
+      'https://via.placeholder.com/400x250',
+    ],
+    area: '200 sqm',
+    bedrooms: 3,
+    bathrooms: 2,
+    tokenAvailable: true,
+    roi: '8% Annual',
+    description:
+      'A luxurious apartment with stunning views, fully furnished, located in the heart of Riyadh. Perfect for investors and residents looking for modern amenities.',
+  };
 
   return (
-    <View style={{flex:1}}>
-        <SafeAreaView
-                              edges={['top']}
-                              style={{ backgroundColor: colors.primary , paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight:0}}
-                            >
-                              <StatusBar
-                                barStyle="light-content"
-                                translucent={false}
-                                backgroundColor="#0F5F3A"
-                              />
-                            </SafeAreaView>
-        <Header
-                    title="Remzik"
-                    onProfilePress={() => navigation.navigate('Profile')}
-                    onNotifPress={() => navigation.navigate('Notifications')}
-                    left={
-                      <TouchableOpacity onPress={() => navigation.toggleDrawer?.()}>
-                        <Ionicons name="menu-outline" size={26} color={colors.card} />
-                      </TouchableOpacity>
-                    }
-                  />
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-
+    <SafeAreaView
+      edges={['top']}
+      style={{
+        flex: 1,
+        backgroundColor: colors.primary,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+      }}
+    >
+      <StatusBar
+        barStyle="light-content"
+        translucent={false}
+        backgroundColor="#0F5F3A"
+      />
+      <ScrollView style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text style={styles.back}>←</Text>
+            <Ionicons name="arrow-back" size={24} color={colors.primary} />
           </TouchableOpacity>
-          <Text style={styles.title}>property.name</Text>
-          <View style={{ width: 24 }} />
+          <Text style={styles.headerTitle}>Property Details</Text>
+          <Ionicons name="bookmark-outline" size={24} color={colors.primary} />
         </View>
 
-        {/* Token Price */}
-        <View style={styles.card}>
-          <Text style={styles.label}>Token Price</Text>
-          <Text style={styles.price}>$property.price</Text>
+        {/* Image Carousel */}
+        <ScrollView
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+        >
+          {property.images.map((img, index) => (
+            <Image
+              key={index}
+              source={require('../../assets/onboarding/featured.jpg')}
+              style={styles.image}
+            />
+          ))}
+        </ScrollView>
+
+        {/* Basic Info */}
+        <View style={styles.infoContainer}>
+          <Text style={styles.title}>{property.title}</Text>
+          <Text style={styles.price}>{property.price}</Text>
+          <Text style={styles.location}>{property.location}</Text>
         </View>
 
-        {/* Token Selector */}
-        <View style={styles.card}>
-          <Text style={styles.sectionTitle}>Select Tokens</Text>
-
-          <View style={styles.counter}>
-            <TouchableOpacity
-              style={styles.counterBtn}
-              onPress={() => tokens > 1 && setTokens(tokens - 1)}
-            >
-              <Text style={styles.counterText}>−</Text>
-            </TouchableOpacity>
-
-            <Text style={styles.token}>tokens</Text>
-
-            <TouchableOpacity
-              style={styles.counterBtn}
-              onPress={() => setTokens(tokens + 1)}
-            >
-              <Text style={styles.counterText}>+</Text>
-            </TouchableOpacity>
+        {/* Key Details */}
+        <View style={styles.detailsContainer}>
+          <View style={styles.detailBox}>
+            <Text style={styles.detailLabel}>Area</Text>
+            <Text style={styles.detailValue}>{property.area}</Text>
           </View>
-
-          <View style={styles.row}>
-            <Text style={styles.meta}>Ownership</Text>
-            <Text style={styles.metaValue}>ownership%</Text>
+          <View style={styles.detailBox}>
+            <Text style={styles.detailLabel}>Bedrooms</Text>
+            <Text style={styles.detailValue}>{property.bedrooms}</Text>
           </View>
-
-          <View style={styles.row}>
-            <Text style={styles.meta}>Est. Monthly Payout</Text>
-            <Text style={styles.metaValue}>$payout</Text>
+          <View style={styles.detailBox}>
+            <Text style={styles.detailLabel}>Bathrooms</Text>
+            <Text style={styles.detailValue}>{property.bathrooms}</Text>
+          </View>
+          <View style={styles.detailBox}>
+            <Text style={styles.detailLabel}>Token</Text>
+            <Text style={styles.detailValue}>
+              {property.tokenAvailable ? 'Available' : 'Not Available'}
+            </Text>
           </View>
         </View>
 
-        {/* Payment Methods */}
-        <View style={styles.paymentRow}>
-          <TouchableOpacity style={styles.payBtn}>
-            <Text style={styles.payText}>Bank</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.payBtn}>
-            <Text style={styles.payText}>Card</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.payBtn}>
-            <Text style={styles.payText}>Crypto</Text>
-          </TouchableOpacity>
+        {/* ROI */}
+        <View style={styles.roiContainer}>
+          <Text style={styles.roiText}>Expected ROI: {property.roi}</Text>
         </View>
 
-        {/* CTA */}
-        <TouchableOpacity style={styles.primaryBtn}>
-          <Text style={styles.primaryText}>Continue</Text>
-        </TouchableOpacity>
-
-        {/* Shariah */}
-        <View style={styles.shariah}>
-          <Text style={styles.shariahText}>✔ Shariah Certified</Text>
+        {/* Description */}
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.description}>{property.description}</Text>
         </View>
 
+        {/* Action Buttons */}
+        <View style={styles.actionContainer}>
+          <TouchableOpacity
+            style={styles.investBtn}
+            onPress={() =>
+              navigation.navigate('Market', { screen: 'EnterAmount' })
+            }
+          >
+            <Text style={styles.investText}>Invest Now</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
-    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FFFFFF' },
-
+  container: { flex: 1, backgroundColor: '#ffffff' },
   header: {
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
     padding: 16,
-    alignItems: 'center',
   },
-
-  back: { fontSize: 22, color: '#0B3D2E' },
-  title: { fontSize: 16, fontWeight: '700', color: '#0B3D2E' },
-
-  card: {
-    backgroundColor: '#F9FAFB',
-    borderRadius: 18,
-    padding: 16,
-    marginHorizontal: 20,
-    marginBottom: 16,
+  headerTitle: { fontSize: 18, fontWeight: 'bold', color: colors.primary },
+  image: { width: 400, height: 250, resizeMode: 'cover', marginRight: 8 },
+  infoContainer: { padding: 18 },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 4,
+    color: colors.primary,
   },
-
-  label: { fontSize: 13, color: '#6B7280' },
-  price: { fontSize: 26, fontWeight: '700', color: '#0B3D2E' },
-
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: '700',
-    marginBottom: 12,
-    color: '#0B3D2E',
-  },
-
-  counter: {
+  price: { fontSize: 18, marginBottom: 4 },
+  location: { fontSize: 14, color: '#666' },
+  detailsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
+    flexWrap: 'wrap',
+    paddingHorizontal: 18,
+    marginTop: 16,
   },
-
-  counterBtn: {
-    width: 42,
-    height: 42,
-    borderRadius: 12,
-    backgroundColor: '#E6F2EE',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  counterText: { fontSize: 20, fontWeight: '700', color: '#0B3D2E' },
-  token: { fontSize: 20, fontWeight: '700', color: '#0B3D2E' },
-
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 6,
-  },
-
-  meta: { fontSize: 13, color: '#6B7280' },
-  metaValue: { fontSize: 13, fontWeight: '700', color: '#0B3D2E' },
-
-  paymentRow: {
+  detailBox: { width: '50%', marginBottom: 12 },
+  detailLabel: { fontSize: 12, color: '#888' },
+  detailValue: { fontSize: 16, fontWeight: '600' },
+  roiContainer: { paddingHorizontal: 16, marginVertical: 16 },
+  roiText: { fontSize: 16, fontWeight: '600', color: '#FF5722' },
+  descriptionContainer: { paddingHorizontal: 18, marginBottom: 24 },
+  description: { fontSize: 14, color: '#555', lineHeight: 20 },
+  actionContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginHorizontal: 20,
-    marginBottom: 16,
+    marginBottom: 24,
   },
-
-  payBtn: {
-    borderWidth: 1,
-    borderColor: '#0B3D2E',
-    borderRadius: 50,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+  investBtn: {
+    backgroundColor: '#47a04aff',
+    paddingVertical: 12,
+    paddingHorizontal: 50,
+    borderRadius: 8,
   },
-
-  payText: { fontSize: 14, fontWeight: '600', color: '#0B3D2E' },
-
-  primaryBtn: {
-    backgroundColor: colors.accent,
-    marginHorizontal: 20,
-    paddingVertical: 13,
-    borderRadius: 18,
-    alignItems: 'center',
+  investText: { color: '#fff', fontWeight: 'bold' },
+  shareBtn: {
+    backgroundColor: '#2196F3',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 8,
   },
-
-  primaryText: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#ffffff',
-  },
-
-  shariah: {
-    alignSelf: 'center',
-    marginTop: 16,
-    marginBottom: 30,
-    backgroundColor: '#E6F2EE',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-  },
-
-  shariahText: { fontSize: 12, fontWeight: '600', color: '#0B3D2E' },
+  shareText: { color: '#fff', fontWeight: 'bold' },
 });
 
-export default MarketPropertyDetailScreen;
+export default PropertyDetailsScreen;

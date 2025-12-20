@@ -3,161 +3,98 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
-  ScrollView,
   TouchableOpacity,
-  StatusBar,
-  FlatList
+  ScrollView,
 } from 'react-native';
-import colors from '../../theme/colors';
-import Header from '../../components/Header';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const SuccessScreen = ({ navigation }) => {
-  return (
-    <View style={{flex:1, backgroundColor:'#ffffff'}}>
-         <SafeAreaView
-                      edges={['top']}
-                      style={{ backgroundColor: colors.primary , paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight:0}}
-                    >
-                      <StatusBar
-                        barStyle="light-content"
-                        translucent={false}
-                        backgroundColor="#0F5F3A"
-                      />
-                    </SafeAreaView>
-                    <Header
-                    title="Remzik"
-                    onProfilePress={() => navigation.navigate('Profile')}
-                    onNotifPress={() => navigation.navigate('Notifications')}
-                    left={
-                      <TouchableOpacity onPress={() => navigation.toggleDrawer?.()}>
-                        <Ionicons name="menu-outline" size={26} color={colors.card} />
-                      </TouchableOpacity>
-                    }
-                  />
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.success}>🎉 Investment Successful</Text>
+import colors from '../../theme/colors';
 
-      <Text style={styles.desc}>
-        Your investment has been completed successfully and added to your
-        portfolio.
-      </Text>
+type InvestSuccessProps = {
+  route: any;
+  navigation: any;
+};
+
+const InvestSuccessScreen = ({ route, navigation }: InvestSuccessProps) => {
+  // const { amount, payment } = route.params;
+  // const expectedReturn = (amount * 0.08).toFixed(2); // Example 8% annual
+
+  return (
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{ padding: 20, alignItems: 'center' }}
+    >
+      <Ionicons
+        name="checkmark-circle"
+        size={100}
+        color="green"
+        style={{ marginVertical: 30 }}
+      />
+      <Text style={styles.header}>Investment Successful!</Text>
+
+      <View style={styles.card}>
+        <Text style={styles.label}>Amount Invested</Text>
+        <Text style={styles.value}>SAR 54</Text>
+      </View>
+
+      <View style={styles.card}>
+        <Text style={styles.label}>Payment Method</Text>
+        <Text style={styles.value}>Bank</Text>
+      </View>
+
+      <View style={styles.card}>
+        <Text style={styles.label}>Expected Returns (Annual)</Text>
+        <Text style={styles.value}>SAR 50%</Text>
+      </View>
 
       <TouchableOpacity
-        style={styles.primaryBtn}
-        onPress={() => navigation.navigate('PortfolioTab')}
+        style={[styles.button, { backgroundColor: colors.primary }]}
+        onPress={() => navigation.navigate('Portfolio')}
       >
-        <Text style={styles.primaryText}>Go to Portfolio</Text>
+        <Text style={styles.buttonText}>View Portfolio</Text>
       </TouchableOpacity>
-    </SafeAreaView>
-    </View>
+
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: '#f2f2f2' }]}
+        onPress={() => navigation.navigate('Home')}
+      >
+        <Text style={[styles.buttonText, { color: '#333' }]}>Back to Home</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 
+export default InvestSuccessScreen;
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    padding: 20,
-    margin:20,
-    marginTop:30
-  },
-
+  container: { flex: 1, backgroundColor: '#fff' },
   header: {
-    fontSize: 20,
+    fontSize: 28,
     fontWeight: '700',
-    color: '#0B3D2E',
-    marginBottom: 20,
-  },
-
-  card: {
-    backgroundColor: '#F9FAFB',
-    padding: 16,
-    borderRadius: 18,
-    marginBottom: 16,
-  },
-
-  label: {
-    fontSize: 13,
-    color: '#6B7280',
-  },
-
-  value: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#0B3D2E',
-    marginTop: 6,
-  },
-
-  row: {
-    fontSize: 14,
-    color: '#6B7280',
-  },
-
-  item: {
-    fontSize: 14,
-    marginBottom: 8,
-    color: '#374151',
-  },
-
-  total: {
-    fontSize: 16,
-    fontWeight: '700',
-    marginTop: 10,
-    color: '#0B3D2E',
-  },
-
-  agreement: {
-    marginVertical: 20,
-  },
-
-  agreeText: {
-    fontSize: 12,
-    color: '#6B7280',
-  },
-
-  method: {
-    backgroundColor: '#F9FAFB',
-    padding: 18,
-    borderRadius: 18,
-    marginBottom: 14,
-  },
-
-  methodText: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: '#0B3D2E',
-  },
-
-  primaryBtn: {
-    backgroundColor: '#D9B676',
-    paddingVertical: 16,
-    borderRadius: 18,
-    alignItems: 'center',
-    marginTop: 20,
-  },
-
-  primaryText: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#0B3D2E',
-  },
-
-  success: {
-    fontSize: 22,
-    fontWeight: '700',
-    color: '#16A34A',
-    textAlign: 'center',
-    marginBottom: 12,
-  },
-
-  desc: {
-    fontSize: 14,
-    color: '#6B7280',
-    textAlign: 'center',
+    color: colors.primary,
     marginBottom: 30,
+    textAlign: 'center',
   },
+  card: {
+    backgroundColor: '#f9f9f9',
+    borderRadius: 12,
+    padding: 20,
+    width: '100%',
+    marginBottom: 15,
+    shadowColor: '#000',
+    shadowOpacity: 0.03,
+    shadowRadius: 5,
+    elevation: 2,
+    alignItems: 'center',
+  },
+  label: { fontSize: 14, color: '#666', marginBottom: 5 },
+  value: { fontSize: 18, fontWeight: '700', color: '#333' },
+  button: {
+    paddingVertical: 15,
+    borderRadius: 12,
+    alignItems: 'center',
+    width: '100%',
+    marginTop: 15,
+  },
+  buttonText: { fontSize: 18, fontWeight: '700' },
 });
-
-export default SuccessScreen;

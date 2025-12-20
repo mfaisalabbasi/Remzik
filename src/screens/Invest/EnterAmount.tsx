@@ -1,235 +1,153 @@
+import React, { useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
-  ScrollView,
+  TextInput,
   TouchableOpacity,
-  StatusBar,
-  FlatList
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import colors from '../../theme/colors';
-import Header from '../../components/Header';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const EnterAmountScreen = ({ navigation, route }) => {
-//   const tokenPrice = route?.params?.tokenPrice || 56;
-//   const [tokens, setTokens] = useState(1);
+const EnterAmount = ({ navigation }: any) => {
+  const [amount, setAmount] = useState('');
 
-//   const totalAmount = tokens * tokenPrice;
+  const handleNext = () => {
+    if (!amount || parseFloat(amount) <= 0) {
+      alert('Please enter a valid amount');
+      return;
+    }
+    navigation.navigate('SelectPaymentMethod', { amount: parseFloat(amount) });
+  };
 
   return (
-    <View style={{flex:1}}>
-        <SafeAreaView
-                              edges={['top']}
-                              style={{ backgroundColor: colors.primary , paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight:0}}
-                            >
-                              <StatusBar
-                                barStyle="light-content"
-                                translucent={false}
-                                backgroundColor="#0F5F3A"
-                              />
-                            </SafeAreaView>
-                             <Header
-                    title="Remzik"
-                    onProfilePress={() => navigation.navigate('Profile')}
-                    onNotifPress={() => navigation.navigate('Notifications')}
-                    left={
-                      <TouchableOpacity onPress={() => navigation.toggleDrawer?.()}>
-                        <Ionicons name="menu-outline" size={26} color={colors.card} />
-                      </TouchableOpacity>
-                    }
-                  />
-    <SafeAreaView style={styles.container}>
-
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.back}>←</Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>Enter Amount</Text>
-        <View style={{ width: 24 }} />
-      </View>
-
-      {/* Token Info */}
-      <View style={styles.card}>
-        <Text style={styles.label}>Token Price</Text>
-        <Text style={styles.price}>$okenPrice</Text>
-      </View>
-
-      {/* Token Selector */}
-      <View style={styles.card}>
-        <Text style={styles.sectionTitle}>Number of Tokens</Text>
-
-        <View style={styles.counter}>
-          <TouchableOpacity
-            style={styles.counterBtn}
-            onPress={() => tokens > 1 && setTokens(tokens - 1)}
-          >
-            <Text style={styles.counterText}>−</Text>
-          </TouchableOpacity>
-
-          <Text style={styles.token}>tokens</Text>
-
-          <TouchableOpacity
-            style={styles.counterBtn}
-            onPress={() => setTokens(tokens + 1)}
-          >
-            <Text style={styles.counterText}>+</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.row}>
-          <Text style={styles.meta}>Total Investment</Text>
-          <Text style={styles.metaValue}>$totalAmount</Text>
-        </View>
-      </View>
-
-      {/* CTA */}
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
       <TouchableOpacity
-        style={styles.primaryBtn}
-        onPress={() =>
-          navigation.navigate('InvestmentCalculator', {
-            tokens,
-            tokenPrice,
-          })
-        }
+        style={styles.backarrow}
+        onPress={() => navigation.goBack()}
       >
-        <Text style={styles.primaryText}>Continue</Text>
+        <Ionicons name="arrow-back" size={25} color={colors.primary} />
       </TouchableOpacity>
+      <View style={styles.innerContainer}>
+        <Text style={styles.header}>Enter Investment Amount</Text>
+        <Text style={styles.subtitle}>
+          Enter the amount you want to invest in this property/asset.
+        </Text>
 
-      {/* Shariah Badge */}
-      <View style={styles.shariah}>
-        <Text style={styles.shariahText}>✔ Shariah Compliant</Text>
+        {/* Amount Input */}
+        <View style={styles.inputContainer}>
+          <Text style={styles.currency}>SAR</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            placeholder="0.00"
+            value={amount}
+            onChangeText={setAmount}
+          />
+        </View>
+
+        {/* Suggested Quick Amounts */}
+        <View style={styles.quickAmounts}>
+          {['500', '1000', '5000'].map(amt => (
+            <TouchableOpacity
+              key={amt}
+              style={styles.quickButton}
+              onPress={() => setAmount(amt)}
+            >
+              <Text style={styles.quickText}>SAR {amt}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        {/* Next Button */}
+        <TouchableOpacity
+          style={styles.nextButton}
+          onPress={() => navigation.navigate('InvestmentCalculater')}
+        >
+          <Text style={styles.nextText}>Next</Text>
+        </TouchableOpacity>
       </View>
-
-    </SafeAreaView>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
+
+export default EnterAmount;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#fff',
   },
+  backarrow: { marginLeft: 15, marginVertical: 15 },
 
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 16,
-  },
-
-  back: {
-    fontSize: 22,
-    color: '#0B3D2E',
-  },
-
-  title: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#0B3D2E',
-  },
-
-  card: {
-    backgroundColor: '#F9FAFB',
-    borderRadius: 18,
-    padding: 16,
-    marginHorizontal: 20,
-    marginBottom: 16,
-  },
-
-  label: {
-    fontSize: 13,
-    color: '#6B7280',
-  },
-
-  price: {
-    fontSize: 26,
-    fontWeight: '700',
-    color: '#0B3D2E',
-  },
-
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: '700',
-    marginBottom: 12,
-    color: '#0B3D2E',
-  },
-
-  counter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-
-  counterBtn: {
-    width: 44,
-    height: 44,
-    borderRadius: 14,
-    backgroundColor: '#E6F2EE',
-    alignItems: 'center',
+  innerContainer: {
+    padding: 25,
+    flex: 1,
     justifyContent: 'center',
   },
-
-  counterText: {
+  header: {
+    fontSize: 26,
+    fontWeight: '700',
+    color: colors.primary,
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 15,
+    color: '#666',
+    marginBottom: 30,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#eee',
+    borderRadius: 12,
+    paddingHorizontal: 15,
+    paddingVertical: 12,
+    marginBottom: 20,
+  },
+  currency: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginRight: 8,
+    color: '#333',
+  },
+  input: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#0B3D2E',
+    flex: 1,
+    color: '#333',
   },
-
-  token: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#0B3D2E',
-  },
-
-  row: {
+  quickAmounts: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 40,
   },
-
-  meta: {
-    fontSize: 13,
-    color: '#6B7280',
+  quickButton: {
+    backgroundColor: '#f2f2f2',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 10,
   },
-
-  metaValue: {
+  quickText: {
     fontSize: 14,
-    fontWeight: '700',
-    color: '#0B3D2E',
-  },
-
-  primaryBtn: {
-    backgroundColor: colors.accent,
-    marginHorizontal: 20,
-    paddingVertical: 13,
-    borderRadius: 50,
-    alignItems: 'center',
-    marginTop: 10,
-  },
-
-  primaryText: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#ffffff',
-  },
-
-  shariah: {
-    alignSelf: 'center',
-    marginTop: 18,
-    backgroundColor: '#E6F2EE',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-  },
-
-  shariahText: {
-    fontSize: 12,
     fontWeight: '600',
-    color: '#0B3D2E',
+    color: '#333',
+  },
+  nextButton: {
+    backgroundColor: colors.primary,
+    paddingVertical: 15,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  nextText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '700',
   },
 });
-export default EnterAmountScreen;

@@ -3,197 +3,196 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
-  ScrollView,
+  TextInput,
   TouchableOpacity,
-  StatusBar,
-  FlatList
+  Platform,
 } from 'react-native';
 import colors from '../../theme/colors';
-import Header from '../../components/Header';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import Slider from '@react-native-community/slider';
 
-const CalculatorScreen = ({ navigation, route }) => {
-  const { tokens = 10, tokenPrice = 56 } = route.params || {};
-  const [holdingYears, setHoldingYears] = useState(3);
+const InvestmentCalculatorScreen = ({ navigation, route }: any) => {
+  const initialAmount = route.params?.amount || 0;
 
-  const ownershipPercent = (tokens / 10000) * 100;
-  const investedAmount = tokens * tokenPrice;
-  const projectedPayout = investedAmount * (1 + holdingYears * 0.08);
+  const [amount, setAmount] = useState(initialAmount.toString());
+  const [expectedReturn, setExpectedReturn] = useState(0);
+  const [interestRate, setInterestRate] = useState(8); // example % return per year
+  const [duration, setDuration] = useState(12); // in months
+
+  const calculateReturn = () => {
+    const principal = parseFloat(amount);
+    if (isNaN(principal) || principal <= 0) {
+      alert('Please enter a valid amount');
+      return;
+    }
+    const monthlyReturn = (principal * interestRate) / 100 / 12;
+    setExpectedReturn(monthlyReturn * duration);
+  };
 
   return (
-<View style={{flex:1, backgroundColor:'#ffffff'}}>
-
-     <SafeAreaView
-                      edges={['top']}
-                      style={{ backgroundColor: colors.primary , paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight:0}}
-                    >
-                      <StatusBar
-                        barStyle="light-content"
-                        translucent={false}
-                        backgroundColor="#0F5F3A"
-                      />
-                    </SafeAreaView>
-                    <Header
-                    title="Remzik"
-                    onProfilePress={() => navigation.navigate('Profile')}
-                    onNotifPress={() => navigation.navigate('Notifications')}
-                    left={
-                      <TouchableOpacity onPress={() => navigation.toggleDrawer?.()}>
-                        <Ionicons name="menu-outline" size={26} color={colors.card} />
-                      </TouchableOpacity>
-                    }
-                  />
-
-    <SafeAreaView style={styles.container}>
-
+    <View style={styles.container}>
       <Text style={styles.header}>Investment Calculator</Text>
+      <Text style={styles.subtitle}>
+        Estimate your returns based on investment amount, duration, and expected
+        interest.
+      </Text>
 
-      <View style={styles.card}>
-        <Text style={styles.label}>Holding Period</Text>
-        <Text style={styles.value}>{holdingYears} Years</Text>
-
-        <Slider
-          minimumValue={1}
-          maximumValue={10}
-          step={1}
-          value={holdingYears}
-          onValueChange={setHoldingYears}
-          minimumTrackTintColor="#0B3D2E"
+      <View style={styles.inputContainer}>
+        <Text style={styles.currency}>SAR</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType="numeric"
+          value={amount}
+          onChangeText={setAmount}
+          placeholder="0.00"
         />
       </View>
 
-      <View style={styles.card}>
-        <Text style={styles.row}>Ownership</Text>
-        <Text style={styles.value}>{ownershipPercent.toFixed(2)}%</Text>
+      <Text style={styles.label}>Expected Annual Return (%)</Text>
+      <View style={styles.sliderContainer}>
+        <Text>{interestRate}%</Text>
+        <Slider
+          style={{ flex: 1, marginLeft: 10 }}
+          minimumValue={1}
+          maximumValue={20}
+          step={1}
+          value={interestRate}
+          onValueChange={setInterestRate}
+          minimumTrackTintColor={colors.primary}
+          maximumTrackTintColor="#ddd"
+        />
       </View>
 
-      <View style={styles.card}>
-        <Text style={styles.row}>Projected Payout</Text>
-        <Text style={styles.value}>${projectedPayout.toFixed(2)}</Text>
+      <Text style={styles.label}>Investment Duration (Months)</Text>
+      <View style={styles.sliderContainer}>
+        <Text>{duration}</Text>
+        <Slider
+          style={{ flex: 1, marginLeft: 10 }}
+          minimumValue={1}
+          maximumValue={60}
+          step={1}
+          value={duration}
+          onValueChange={setDuration}
+          minimumTrackTintColor={colors.primary}
+          maximumTrackTintColor="#ddd"
+        />
       </View>
 
       <TouchableOpacity
-        style={styles.primaryBtn}
+        style={styles.calculateButton}
+        onPress={calculateReturn}
+      >
+        <Text style={styles.calculateText}>Calculate</Text>
+      </TouchableOpacity>
+
+      <View style={styles.resultContainer}>
+        <Text style={styles.resultLabel}>Expected Returns:</Text>
+        <Text style={styles.resultValue}>SAR {expectedReturn.toFixed(2)}</Text>
+      </View>
+
+      <TouchableOpacity
+        style={styles.nextButton}
         onPress={() =>
-          navigation.navigate('ReviewSign', {
-            tokens,
-            tokenPrice,
-            holdingYears,
+          navigation.navigate('InvestmentMethod', {
+            amount: parseFloat(amount),
           })
         }
       >
-        <Text style={styles.primaryText}>Continue</Text>
+        <Text style={styles.nextText}>Proceed to Invest</Text>
       </TouchableOpacity>
-    </SafeAreaView>
     </View>
   );
 };
 
+export default InvestmentCalculatorScreen;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    padding: 20,
-    margin:20,
-    marginTop:30
+    backgroundColor: '#fff',
+    padding: 25,
   },
-
   header: {
-    fontSize: 20,
+    fontSize: 26,
     fontWeight: '700',
-    color: '#0B3D2E',
+    color: colors.primary,
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 25,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: '#eee',
+    borderRadius: 12,
+    paddingHorizontal: 15,
+    paddingVertical: Platform.OS === 'ios' ? 12 : 0,
+    alignItems: 'center',
     marginBottom: 20,
   },
-
-  card: {
-    backgroundColor: '#F9FAFB',
-    padding: 16,
-    borderRadius: 18,
-    marginBottom: 16,
-  },
-
-  label: {
-    fontSize: 13,
-    color: '#6B7280',
-  },
-
-  value: {
+  currency: {
     fontSize: 18,
-    fontWeight: '700',
-    color: '#0B3D2E',
-    marginTop: 6,
-  },
-
-  row: {
-    fontSize: 14,
-    color: '#6B7280',
-  },
-
-  item: {
-    fontSize: 14,
-    marginBottom: 8,
-    color: '#374151',
-  },
-
-  total: {
-    fontSize: 16,
-    fontWeight: '700',
-    marginTop: 10,
-    color: '#0B3D2E',
-  },
-
-  agreement: {
-    marginVertical: 20,
-  },
-
-  agreeText: {
-    fontSize: 12,
-    color: '#6B7280',
-  },
-
-  method: {
-    backgroundColor: '#F9FAFB',
-    padding: 18,
-    borderRadius: 18,
-    marginBottom: 14,
-  },
-
-  methodText: {
-    fontSize: 15,
     fontWeight: '600',
-    color: '#0B3D2E',
+    marginRight: 8,
+    color: '#333',
   },
-
-  primaryBtn: {
-    backgroundColor: '#D9B676',
-    paddingVertical: 16,
-    borderRadius: 18,
+  input: {
+    fontSize: 20,
+    fontWeight: '700',
+    flex: 1,
+    color: '#333',
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 5,
+  },
+  sliderContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 20,
+    marginBottom: 25,
   },
-
-  primaryText: {
+  calculateButton: {
+    backgroundColor: colors.primary,
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginBottom: 25,
+  },
+  calculateText: {
+    color: '#fff',
     fontSize: 16,
     fontWeight: '700',
-    color: '#ffffff',
   },
-
-  success: {
+  resultContainer: {
+    backgroundColor: '#f9f9f9',
+    padding: 20,
+    borderRadius: 12,
+    marginBottom: 25,
+    alignItems: 'center',
+  },
+  resultLabel: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 8,
+  },
+  resultValue: {
     fontSize: 22,
     fontWeight: '700',
-    color: '#16A34A',
-    textAlign: 'center',
-    marginBottom: 12,
+    color: colors.primary,
   },
-
-  desc: {
-    fontSize: 14,
-    color: '#6B7280',
-    textAlign: 'center',
-    marginBottom: 30,
+  nextButton: {
+    backgroundColor: colors.primary,
+    paddingVertical: 15,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  nextText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '700',
   },
 });
-
-export default CalculatorScreen;

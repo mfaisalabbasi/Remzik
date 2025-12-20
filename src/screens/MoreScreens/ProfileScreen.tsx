@@ -1,121 +1,201 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
-  ScrollView,
   TouchableOpacity,
-  StatusBar,
-  FlatList
+  ScrollView,
+  Image,
+  TextInput,
 } from 'react-native';
-import colors from '../../theme/colors';
-import Header from '../../components/Header';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import colors from '../../theme/colors';
 
-const ProfileScreen = () => {
+const ProfileKycScreen = ({ navigation }: any) => {
+  const [fullName, setFullName] = useState('Muhammad Faisal');
+  const [email, setEmail] = useState('faisal@example.com');
+  const [phone, setPhone] = useState('+966 5XXXXXXXX');
+  const [kycStatus, setKycStatus] = useState('Verified'); // could be Pending / Not Verified
+
+  const handleEditProfile = () => {
+    console.log('Edit Profile Pressed');
+  };
+
+  const handleUploadDocuments = () => {
+    console.log('Upload Documents Pressed');
+  };
+
   return (
-    <View style={{flex:1,backgroundColor:"#ffffff"}}>
- <SafeAreaView
-                      edges={['top']}
-                      style={{ backgroundColor: colors.primary , paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight:0}}
-                    >
-                      <StatusBar
-                        barStyle="light-content"
-                        translucent={false}
-                        backgroundColor="#0F5F3A"
-                      />
-                    </SafeAreaView>
-                    <Header
-                    title="Remzik"
-                    onProfilePress={() => navigation.navigate('Profile')}
-                    onNotifPress={() => navigation.navigate('Notifications')}
-                    left={
-                      <TouchableOpacity onPress={() => navigation.toggleDrawer?.()}>
-                        <Ionicons name="menu-outline" size={26} color={colors.card} />
-                      </TouchableOpacity>
-                    }
-                  />
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.backarrow}
+        onPress={() => navigation.goBack()}
+      >
+        <Ionicons name="arrow-back" size={25} color={colors.primary} />
+      </TouchableOpacity>
+      <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
+        {/* Profile Card */}
+        <View style={styles.profileCard}>
+          <Image
+            source={require('../../assets/onboarding/slide2.png')} // placeholder avatar
+            style={styles.avatar}
+          />
+          <View style={styles.profileInfo}>
+            <Text style={styles.name}>{fullName}</Text>
+            <Text style={styles.email}>{email}</Text>
+            <Text style={styles.phone}>{phone}</Text>
+          </View>
+          <TouchableOpacity
+            style={styles.editButton}
+            onPress={handleEditProfile}
+          >
+            <Ionicons name="pencil" size={20} color="#fff" />
+          </TouchableOpacity>
+        </View>
 
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>Profile</Text>
+        {/* KYC Status */}
+        <View style={styles.kycCard}>
+          <Text style={styles.kycHeader}>KYC Status</Text>
+          <View style={styles.kycStatus}>
+            <Ionicons
+              name={
+                kycStatus === 'Verified' ? 'checkmark-circle' : 'alert-circle'
+              }
+              size={20}
+              color={kycStatus === 'Verified' ? 'green' : 'orange'}
+            />
+            <Text style={styles.kycText}>{kycStatus}</Text>
+          </View>
+          {kycStatus !== 'Verified' && (
+            <TouchableOpacity
+              style={styles.uploadButton}
+              onPress={handleUploadDocuments}
+            >
+              <Text style={styles.uploadText}>Upload Documents</Text>
+            </TouchableOpacity>
+          )}
+        </View>
 
-      <View style={styles.card}>
-        <Text style={styles.label}>Full Name</Text>
-        <Text style={styles.value}>Faisal Ahmed</Text>
-      </View>
-
-      <View style={styles.card}>
-        <Text style={styles.label}>Email</Text>
-        <Text style={styles.value}>faisal@email.com</Text>
-      </View>
-
-      <View style={styles.card}>
-        <Text style={styles.label}>KYC Status</Text>
-        <Text style={styles.status}>Verified</Text>
-      </View>
-    </SafeAreaView>
+        {/* User Details Form (Read-only for now) */}
+        <View style={styles.formContainer}>
+          <Text style={styles.label}>Full Name</Text>
+          <TextInput style={styles.input} value={fullName} editable={false} />
+          <Text style={styles.label}>Email</Text>
+          <TextInput style={styles.input} value={email} editable={false} />
+          <Text style={styles.label}>Phone</Text>
+          <TextInput style={styles.input} value={phone} editable={false} />
+        </View>
+      </ScrollView>
     </View>
   );
 };
 
+export default ProfileKycScreen;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    padding: 20,
-    margin:20,
-    marginTop:30
+    backgroundColor: '#fff',
   },
+  backarrow: { marginLeft: 25, marginTop: 20 },
 
-  header: {
+  profileCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f9f9f9',
+    marginHorizontal: 20,
+    padding: 15,
+    borderRadius: 12,
+    marginBottom: 25,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 3,
+  },
+  avatar: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+  },
+  profileInfo: {
+    flex: 1,
+    marginLeft: 15,
+  },
+  name: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#0B3D2E',
-    marginBottom: 20,
+    color: '#333',
   },
-
-  card: {
-    backgroundColor: '#F9FAFB',
-    padding: 16,
-    borderRadius: 18,
-    marginBottom: 14,
-  },
-
-  label: {
-    fontSize: 12,
-    color: '#6B7280',
-  },
-
-  value: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: '#0B3D2E',
-  },
-
-  status: {
+  email: {
     fontSize: 14,
+    color: '#666',
+    marginVertical: 2,
+  },
+  phone: {
+    fontSize: 14,
+    color: '#666',
+  },
+  editButton: {
+    backgroundColor: colors.primary,
+    padding: 10,
+    borderRadius: 8,
+  },
+  kycCard: {
+    backgroundColor: '#f9f9f9',
+    marginHorizontal: 20,
+    padding: 20,
+    borderRadius: 12,
+    marginBottom: 25,
+    shadowColor: '#000',
+    shadowOpacity: 0.03,
+    shadowRadius: 5,
+    elevation: 2,
+  },
+  kycHeader: {
+    fontSize: 18,
     fontWeight: '700',
-    color: '#16A34A',
+    marginBottom: 10,
+    color: '#333',
   },
-
-  item: {
-    backgroundColor: '#F9FAFB',
-    padding: 18,
-    borderRadius: 18,
-    marginBottom: 14,
+  kycStatus: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-
-  logout: {
-    backgroundColor: '#FEE2E2',
+  kycText: {
+    marginLeft: 8,
+    fontSize: 16,
+    color: '#333',
+    fontWeight: '500',
   },
-
-  text: {
-    fontSize: 15,
+  uploadButton: {
+    marginTop: 15,
+    backgroundColor: colors.primary,
+    paddingVertical: 10,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  uploadText: {
+    color: '#fff',
     fontWeight: '600',
-    color: '#0B3D2E',
+    fontSize: 16,
+  },
+  formContainer: {
+    marginHorizontal: 20,
+  },
+  label: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 5,
+    marginTop: 15,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#eee',
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
+    backgroundColor: '#f5f5f5',
+    color: '#333',
   },
 });
-
-export default ProfileScreen;
