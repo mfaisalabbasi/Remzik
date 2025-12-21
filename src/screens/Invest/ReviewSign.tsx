@@ -37,6 +37,12 @@ const InvestReviewScreen = ({ route, navigation }: InvestReviewProps) => {
       style={styles.container}
       contentContainerStyle={{ padding: 20 }}
     >
+      <TouchableOpacity
+        style={styles.backarrow}
+        onPress={() => navigation.goBack()}
+      >
+        <Ionicons name="arrow-back" size={25} color={colors.primary} />
+      </TouchableOpacity>
       <Text style={styles.header}>Review & Confirm</Text>
 
       <View style={styles.card}>
@@ -83,6 +89,8 @@ const styles = StyleSheet.create({
     color: colors.primary,
     marginBottom: 20,
   },
+  backarrow: { marginLeft: 0, marginBottom: 10 },
+
   card: {
     backgroundColor: '#f9f9f9',
     borderRadius: 12,

@@ -50,10 +50,26 @@ const MarketStack = () => (
       component={EnterAmountScreen}
       options={{ title: 'Enter Amount' }}
     />
-    <Stack.Screen name="InvestmentCalculater" component={CalculatorScreen} />
-    <Stack.Screen name="InvestmentMethod" component={PaymentMethodScreen} />
-    <Stack.Screen name="InvestmentSuccess" component={SuccessScreen} />
-    <Stack.Screen name="ReviewSign" component={ReviewSignScreen} />
+    <Stack.Screen
+      name="InvestmentCalculater"
+      component={CalculatorScreen}
+      options={{ title: 'Investment Calculater' }}
+    />
+    <Stack.Screen
+      name="InvestmentMethod"
+      component={PaymentMethodScreen}
+      options={{ title: 'Payment Method' }}
+    />
+    <Stack.Screen
+      name="InvestmentSuccess"
+      component={SuccessScreen}
+      options={{ title: 'Congratulations' }}
+    />
+    <Stack.Screen
+      name="ReviewSign"
+      component={ReviewSignScreen}
+      options={{ title: 'Review' }}
+    />
   </Stack.Navigator>
 );
 

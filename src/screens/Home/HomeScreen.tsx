@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   StatusBar,
+  Platform,
 } from 'react-native';
 import colors from '../../theme/colors';
 import Header from '../../components/Header';
@@ -35,8 +36,6 @@ const HomeScreen = () => {
       </SafeAreaView>
       <Header
         title="Remzik"
-        onProfilePress={() => navigation.navigate('Profile')}
-        onNotifPress={() => navigation.navigate('Notifications')}
         left={
           <TouchableOpacity onPress={() => navigation.toggleDrawer?.()}>
             <Ionicons name="menu-outline" size={26} color={colors.card} />

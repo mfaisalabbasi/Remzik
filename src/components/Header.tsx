@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image , TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import colors from '../theme/colors';
@@ -11,17 +11,21 @@ const Header = () => {
         {/* Logo */}
         <Image
           source={require('../assets/remzik.png')}
-          style={{ width: 50, height: 70, resizeMode: 'cover' }}
+          style={{ width: 30, height: 50, resizeMode: 'cover' }}
         />
         <View>
-          <Text style={styles.appName}>Remzik</Text>
-          <Text style={styles.subText}>Protocol</Text>
+          <Text style={styles.appName}>emzik</Text>
+          {/* <Text style={styles.subText}>Protocol</Text> */}
         </View>
       </View>
 
-     <TouchableOpacity onPress={()=>navigation.navigate('Notifications')}>
-                 <Ionicons name="notifications-outline" color={colors.background} size={30} />
-               </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
+        <Ionicons
+          name="notifications-outline"
+          color={colors.background}
+          size={30}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -36,7 +40,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
-
   },
   left: {
     flexDirection: 'row',
@@ -44,12 +47,12 @@ const styles = StyleSheet.create({
   },
   appName: {
     color: 'white',
-    fontSize: 26,
-    fontWeight: '700',
+    fontSize: 30,
+    fontWeight: '400',
     letterSpacing: 0.5,
   },
   subText: {
-    color: colors.accent,
+    color: '#ffffff',
     fontSize: 14,
   },
   region: {

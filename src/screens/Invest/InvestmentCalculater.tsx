@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import colors from '../../theme/colors';
 import Slider from '@react-native-community/slider';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const InvestmentCalculatorScreen = ({ navigation, route }: any) => {
   const initialAmount = route.params?.amount || 0;
@@ -30,7 +31,13 @@ const InvestmentCalculatorScreen = ({ navigation, route }: any) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Investment Calculator</Text>
+      <TouchableOpacity
+        style={styles.backarrow}
+        onPress={() => navigation.goBack()}
+      >
+        <Ionicons name="arrow-back" size={25} color={colors.primary} />
+      </TouchableOpacity>
+      {/* <Text style={styles.header}>Investment Calculator</Text> */}
       <Text style={styles.subtitle}>
         Estimate your returns based on investment amount, duration, and expected
         interest.
@@ -111,8 +118,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 25,
   },
+  backarrow: { marginLeft: 0, marginBottom: 10 },
+
   header: {
-    fontSize: 26,
+    fontSize: 22,
     fontWeight: '700',
     color: colors.primary,
     marginBottom: 10,
@@ -156,7 +165,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   calculateButton: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.accent,
     paddingVertical: 14,
     borderRadius: 12,
     alignItems: 'center',

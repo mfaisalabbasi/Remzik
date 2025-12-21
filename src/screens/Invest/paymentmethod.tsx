@@ -64,7 +64,13 @@ const PaymentMethodScreen = ({ route, navigation }: InvestPaymentProps) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Select Payment Method</Text>
+      <TouchableOpacity
+        style={styles.backarrow}
+        onPress={() => navigation.goBack()}
+      >
+        <Ionicons name="arrow-back" size={25} color={colors.primary} />
+      </TouchableOpacity>
+      <Text style={styles.header}>Choose Method</Text>
       <Text style={styles.subtitle}>Amount: SAR {amount.toFixed(2)}</Text>
 
       <FlatList
@@ -94,6 +100,8 @@ const styles = StyleSheet.create({
     color: colors.primary,
     marginBottom: 5,
   },
+  backarrow: { marginLeft: 0, marginBottom: 10 },
+
   subtitle: { fontSize: 14, color: '#666', marginBottom: 20 },
   methodCard: {
     flexDirection: 'row',
